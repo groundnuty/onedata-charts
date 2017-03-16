@@ -42,11 +42,11 @@
 
 {{- define "onezone_wait_for" -}}
 {{- $suffix := default "" .Values.suffix -}}
-{{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "onezone" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- define "onezone_name" -}}
 {{- $suffix := default "" .Values.suffix -}}
-{{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "onezone" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- define "onezone_service_url" -}}{{template "onezone_name" . }}.{{template "service_domain" . }}{{- end -}}
 
