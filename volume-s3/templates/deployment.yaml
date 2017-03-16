@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: "{{ .Release.Name }}"
+        heritage: "{{ .Release.Service }}"
+    spec:
+      hostname: {{ .Chart.Name }}
+      subdomain: {{ template "fullname" . }}
+{{ include "imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        command:
+         - "sh"
+         - "-c"
+         - >
+           export HOST_NAME=$(domainname -d) ;
+           /usr/src/app/docker-entrypoint.sh npm start ;
+        ports:
+          - containerPort: 8000
+        readinessProbe:
+          exec:
+            command:
+              - "sh"
+              - "-c"
+              - >
+                curl --output /dev/null --silent --connect-timeout 2 localhost:8000 ;

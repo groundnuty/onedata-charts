@@ -1,0 +1,8 @@
+name: onedata-chart-utils
+version: 0.1.0
+home: https://github.com/onedata
+maintainers:
+  - name: Michal Orzechowski
+    email: orzechowski.michal@gmail.com
+description: A set helper go templates functions for Onedata charts
+engine: gotpl

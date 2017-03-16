@@ -1,2 +1,7 @@
-# onedata-charts
-Helm charts for Onedata
+# Onedata Helm Charts
+
+Initial version of Onedata Helm Charts
+
+~~~
+make clean install-onedata
+~~~

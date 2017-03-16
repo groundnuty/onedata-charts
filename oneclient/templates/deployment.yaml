@@ -1,0 +1,102 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: "{{ .Release.Name }}"
+        heritage: "{{ .Release.Service }}"
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+            {
+                "name": "wait-for-onezone",
+                "image": "{{ .Values.wait_for.image }}",
+                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+{{ include "imagePullSecrets_json" . | indent 16 }}
+                "args": [
+                    "pod", "-lapp={{ template "onezone_name" . }}"
+                ]
+            },
+            {
+                "name": "get-client-token",
+                "image": "{{ .Values.wait_for.image }}",
+                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+{{ include "imagePullSecrets_json" . | indent 16 }}
+                "env": [
+                    {
+                        "name": "ONEZONE_HOST",
+                        "value": "https://{{ template "onezone_service_url" . }}"
+                    },
+                    {
+                        "name": "ONEZONE_BASIC_AUTH",
+                        "value": "admin:password"
+                    }
+                ],
+                "command": [
+                    "sh", "-c",
+                    "onezone-rest-cli -k getClientToken | jq -r \".token\" > /shared/token ;"
+                ],
+                "volumeMounts": [
+                    {
+                        "mountPath": "/shared/",
+                        "name": "shared"
+                    }
+                ]
+            },
+            {
+                "name": "wait-for-oneprovider",
+                "image": "{{ .Values.wait_for.image }}",
+                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+{{ include "imagePullSecrets_json" . | indent 16 }}
+                "args": [
+                    "pod", "-lapp={{ template "oneprovider_name" . }}"
+                ]
+            }
+        ]'
+    spec:
+      hostname: {{ .Chart.Name }}
+      subdomain: {{ template "fullname" . }}
+{{ include "imagePullSecrets" . | indent 6 }}
+      volumes:
+      - name: shared
+        emptyDir: {}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+          - name: ONECLIENT_INSECURE
+            value: "true"
+          - name: ONECLIENT_ACCESS_TOKEN
+            value: "supplied_at_runtime"
+          - name: ONECLIENT_PROVIDER_HOST
+            value: "{{ template "oneprovider_service_url" . }}"
+        command:
+         - "sh"
+         - "-c"
+         - >
+           sleep 3000 ;
+           export ONECLIENT_ACCESS_TOKEN=$(cat /shared/token) ;
+           cat /shared/token ;
+           oneclient -f "/mnt/oneclient" ;
+        readinessProbe:
+          exec:
+            command:
+             - "sh"
+             - "-c"
+             - >
+                mount | grep /mnt/oneclient ;
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /shared
+          name: shared

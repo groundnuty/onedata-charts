@@ -1,0 +1,20 @@
+dependencies:
+- name: onezone
+  version: 0.1.0
+  repository: file://onezone
+
+- name: oneprovider
+  version: 0.1.0
+  repository: file://oneprovider
+
+- name: onedata-cli
+  version: 0.1.0
+  repository: file://onedata-cli
+
+- name: oneclient
+  version: 0.1.0
+  repository: file://oneclient
+
+- name: onedata-chart-utils
+  version: 0.1.0
+  repository: file://onedata-chart-utils

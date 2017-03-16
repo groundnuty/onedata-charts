@@ -1,0 +1,7 @@
+name: onedata
+version: 0.1.0
+home: https://github.com/onedata/onedata
+maintainers:
+  - name: Michal Orzechowski
+    email: orzechowski.michal@gmail.com
+description: Onedata is a distributed data management platform providing eventually consistent, POSIX-compliant virtual filesystem

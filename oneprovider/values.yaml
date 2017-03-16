@@ -1,0 +1,62 @@
+# Default values for oneprovider.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image: docker.onedata.org/oneprovider:3.0.0-rc12
+imagePullPolicy: IfNotPresent
+serviceType: ClusterIP
+
+wait_for:
+  image: groundnuty/k8s-wait-for
+  imagePullPolicy: IfNotPresent
+
+# #nfs:
+# #  enabled: true
+# #ceph:
+# #  enabled: true
+# s33: []
+# s:
+# s3:
+#   - name: s3-1
+#     enabled: true
+#     s3server-dependency: s3server
+#   - name: s3-2
+#     enabled: true
+#     s3server-dependency: s3server
+
+
+# local:
+#   enabled: true
+
+# hostname: node1
+
+# # ceph-base:
+#   replicaCount: 1
+#   image:
+#     repository: docker.onedata.org/ceph-base
+#     tag: "latest"
+#     pullPolicy: IfNotPresent
+#   service:
+#     type: ClusterIP
+#   docker-secret : docker-onedata-org-morzech
+
+# s3server:
+#   replicaCount: 1
+#   image:
+#     repository: scality/s3server
+#     tag: "latest"
+#     pullPolicy: IfNotPresent
+#   service:
+#     type: ClusterIP
+#   docker-secret : docker-onedata-org-morzech
+
+# nfs-server:
+#   replicaCount: 1
+#   image:
+#     repository: gcr.io/google-samples/nfs-server
+#     tag: 1.1
+#     pullPolicy: IfNotPresent
+#   service:
+#     type: ClusterIP
+#   docker-secret : docker-onedata-org-morzech
+

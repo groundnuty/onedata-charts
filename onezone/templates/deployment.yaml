@@ -1,0 +1,98 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: "{{ .Release.Name }}"
+        heritage: "{{ .Release.Service }}"
+    spec:
+      hostname: node1
+      subdomain: {{ template "fullname" . }}
+{{ include "imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        ports:
+          - containerPort: 53
+          - containerPort: 80
+          - containerPort: 443
+          - containerPort: 5555
+          - containerPort: 5556
+          - containerPort: 6665
+          - containerPort: 6666
+          - containerPort: 7443
+          - containerPort: 8443
+          - containerPort: 8876
+          - containerPort: 8877
+          - containerPort: 9443
+        lifecycle:
+          preStop:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - >
+                  oz_panel stop ;
+                  oz_worker stop ;
+                  cluster_manager stop ;
+                  /etc/init.d/couchbase-server stop ;
+                  echo 1 > /monitor/onezone-exit ;
+                  pkill -f onezone.py ;
+        readinessProbe:
+          exec:
+            command:
+              - "/bin/bash"
+              - "-c"
+              - >
+                service=zone ;
+                user="$(curl -k -u admin:password -sS --tlsv1.2   -X GET 'https://localhost:9443/api/v3/onepanel/users/user')";
+                if [[ "$user" == "" ]] ; then exit 1; else  exit 0;  fi ;
+  # managers=$(curl -k -u admin:password -sS --tlsv1.2 -X GET "https://localhost:9443/api/v3/onepanel/$service/managers") ;
+# databases=$(curl -k -u admin:password -sS --tlsv1.2 -X GET "https://localhost:9443/api/v3/onepanel/$service/databases") ;
+# workers=$(curl -k -u admin:password -sS --tlsv1.2 -X GET "https://localhost:9443/api/v3/onepanel/$service/workers") ;
+# if [[ $(echo -e  "$managers\n$databases\n$workers" | cut -d ":" -f 2 | tr -d \"} | grep -v running | tr -d "\n") == "" ]] ; then exit 0 ; else exit 1; fi ;
+        env:
+          #- name: ONEPANEL_DEBUG_MODE
+          #  value: "true"
+          - name: ONEPANEL_BATCH_MODE
+            value: "true"
+          - name: ONEZONE_CONFIG
+            value: |
+              cluster:
+                domainName: "{{ template "service_url" . }}"
+                autoDeploy: true
+                nodes:
+                  n1:
+                    hostname: "node1"
+                managers:
+                  mainNode: "n1"
+                  nodes:
+                    - "n1"
+                workers:
+                  nodes:
+                    - "n1"
+                databases:
+                  nodes:
+                    - "n1"
+              onezone:
+                name: {{ template "fullname" . }}
+                domainName: "{{ template "service_url" . }}"
+              onepanel:
+                users:
+                  "admin":
+                    password: "password"
+                    userRole: "admin"
+                  "user":
+                    password: "password"
+                    userRole: "regular"

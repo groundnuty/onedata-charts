@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: "{{ .Release.Name }}"
+        heritage: "{{ .Release.Service }}"
+    spec:
+      hostname: {{ .Chart.Name }}
+      subdomain: {{ template "fullname" . }}
+{{ include "imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        ports:
+          - containerPort: 80
+          - containerPort: 5000
+          - containerPort: 6800
+          - containerPort: 6801
+          - containerPort: 6802
+          - containerPort: 6803
+          - containerPort: 6804
+          - containerPort: 6805
+        {{- if .Values.pools }}
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - >
+                  curl --output /dev/null --silent --connect-timeout 2 localhost:6800 ;
+                  while [[ $? -ne 0 ]] ; do
+                    sleep 2 ;
+                    echo "Waiting for ceph to create pools" ;
+                    curl --output /dev/null --silent --connect-timeout 2 localhost:6800 ;
+                  done ;
+                {{- range .Values.pools }}
+                  ceph osd pool create {{ . }} 8 ;
+                {{- end -}}
+        {{- end }}
+        livenessProbe:
+          exec:
+            command:
+              - "sh"
+              - "-c"
+              - >
+                curl --output /dev/null --silent --connect-timeout 2 localhost:6800 ;
+        securityContext:
+          privileged: true
+
+

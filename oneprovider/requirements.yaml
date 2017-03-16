@@ -1,0 +1,16 @@
+dependencies:
+- name: volume-nfs
+  version: 0.1.0
+  repository: file://volume-nfs
+
+- name: volume-s3
+  version: 0.1.0
+  repository: file://volume-s3
+
+- name: volume-ceph
+  version: 0.1.0
+  repository: file://volume-ceph
+
+- name: onedata-chart-utils
+  version: 0.1.0
+  repository: file://onedata-chart-utils

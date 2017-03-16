@@ -1,0 +1,9 @@
+# Default values for nfs-server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image: gcr.io/google-samples/nfs-server:1.1
+imagePullPolicy: IfNotPresent
+serviceType: ClusterIP
+
+

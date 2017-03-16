@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        release: "{{ .Release.Name }}"
+        heritage: "{{ .Release.Service }}"
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+            {
+                "name": "wait-for-onezone",
+                "image": "{{ .Values.wait_for.image }}",
+                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+{{ include "imagePullSecrets_json" . | indent 16 }}
+                "args": [
+                    "pod", "-lapp={{ template "onezone_name" . }}"
+                ]
+            }
+        ]'
+    spec:
+      hostname: {{ .Chart.Name }}
+      subdomain: {{ template "fullname" . }}
+{{ include "imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+          - name: ONEZONE_HOST
+            value: "https://{{ template "onezone_service_url" . }}"
+          - name: ONEPANEL_BASIC_AUTH
+            value: "admin:password"
+          - name: ONEZONE_API_KEY
+            value: "supplied_at_runtime"
+          - name: ONEPROVIDER_HOST
+            value: "https://{{ template "oneprovider_service_url" . }}"
+          - name: ONEPANEL_HOST
+            value: "https://{{ template "oneprovider_service_url" . }}:9443"
+        command:
+         - "sh"
+         - "-c"
+         - >
+           echo "-k" > ~/.curlrc ;
+           ONEZONE_API_KEY="$(onezone-rest-cli -u $ONEPANEL_BASIC_AUTH getClientToken | tr -d '\"{}' | cut -d ':' -f 2)" ;
+           echo "export ONEZONE_API_KEY=$ONEZONE_API_KEY" >> ~/.zshrc ;
+           while true; do sleep 1000; done ;

@@ -1,0 +1,18 @@
+# Default values for volume-s3
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image: scality/s3server
+imagePullPolicy: IfNotPresent
+serviceType: ClusterIP
+
+init_job:
+  image: cgswong/aws:aws
+  aws_access_key_id: accessKey1
+  aws_secret_access_key: verySecretKey1
+  bucketName: test1
+
+wait_for:
+  image: groundnuty/k8s-wait-for
+  imagePullPolicy: IfNotPresent
+

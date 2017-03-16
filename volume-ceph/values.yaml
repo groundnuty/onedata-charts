@@ -1,0 +1,10 @@
+# Default values for volume ceph.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image: gcr.io/google-containers/volume-ceph
+imagePullPolicy: IfNotPresent
+serviceType: ClusterIP
+
+pools:
+  - test1
