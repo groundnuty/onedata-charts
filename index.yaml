@@ -1,0 +1,16 @@
+apiVersion: v1
+entries:
+  onedata-chart-utils:
+  - created: 2017-03-17T01:39:18.679624763+01:00
+    description: A set helper go templates functions for Onedata charts
+    digest: 1ff20b94e5441bd9b8984c6bb2042a8216c5488065dd40df9760c343933f9f82
+    engine: gotpl
+    home: https://github.com/onedata
+    maintainers:
+    - email: orzechowski.michal@gmail.com
+      name: Michal Orzechowski
+    name: onedata-chart-utils
+    urls:
+    - onedata-chart-utils-0.1.0.tgz
+    version: 0.1.0
+generated: 2017-03-17T01:39:18.67911623+01:00

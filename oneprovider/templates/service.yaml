@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "fullname-alias-bug" . }}
   labels:
-    app: {{ template "fullname" . }}
+    app: {{ template "fullname-alias-bug" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -35,4 +35,4 @@ spec:
     - name: p9443
       port: 9443
   selector:
-    app: {{ template "fullname" . }}
+    app: {{ template "fullname-alias-bug" . }}

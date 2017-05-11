@@ -1,0 +1,75 @@
+# Default values for cross-support-job
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image: docker.onedata.org/rest-cli:3.0.0-rc12
+imagePullPolicy: IfNotPresent
+imagePullSecrets: [ docker-onedata-org-morzech ]
+
+releaseName: rc14-2
+
+oneprovider:
+  - oneprovider
+  - oneprovider-1
+  - oneprovider-2
+
+supportsa: [ [""], ['1'], ['2'], ["",'1'], ["",'2'], ['1','2'], ["",'1','2'] ]
+
+spaces:
+  - name: "space-0"
+    supports:
+      - provider: ""
+        storage_name: "local"
+        size: '1000000000'
+  - name: "space-1"
+    supports:
+      - provider: '1'
+        storage_name: "nfs"
+        size: '1000000000'
+  - name: "space-2"
+    supports:
+      - provider: '2'
+        storage_name: "s3"
+        size: '1000000000'
+  - name: "space-0-1"
+    supports:
+      - provider: ""
+        storage_name: "nfs"
+        size: '1000000000'
+      - provider: '1'
+        storage_name: "s3"
+        size: '1000000000'
+  - name: "space-0-2"
+    supports:
+      - provider: ""
+        storage_name: "s3"
+        size: '1000000000'
+      - provider: '2'
+        storage_name: "local"
+        size: '1000000000'
+  - name: "space-1-2"
+    supports:
+      - provider: '1'
+        storage_name: "nfs"
+        size: '1000000000'
+      - provider: '2'
+        storage_name: "local"
+        size: '1000000000'
+  - name: "space-0-1-2"
+    supports:
+      - provider: ""
+        storage_name: "s3"
+        size: '1000000000'
+      - provider: '1'
+        storage_name: "s3"
+        size: '1000000000'
+      - provider: '2'
+        storage_name: "local"
+        size: '1000000000'
+
+
+
+wait_for:
+  image: groundnuty/k8s-wait-for
+  imagePullPolicy: IfNotPresent
+

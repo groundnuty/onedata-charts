@@ -1,0 +1,9 @@
+dependencies:
+- condition: ""
+  enabled: false
+  name: onedata-chart-utils
+  repository: file://onedata-chart-utils
+  tags: null
+  version: 0.1.0
+digest: sha256:7c4f753f9e192c46d9e880a7d4a1a2b4f5a07c57f069331c51ecee93dcf4be62
+generated: 2017-03-15T20:19:24.548884743+01:00

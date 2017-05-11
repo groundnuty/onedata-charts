@@ -30,6 +30,8 @@
 {{- end -}}
 {{- define "volume-ceph_service_url" -}}{{template "volume-ceph_name" . }}.{{template "service_domain" . }}{{- end -}}
 
+{{/*
+Suffix problem :(
 {{- define "oneprovider_wait_for" -}}
 {{- $suffix := default "" .Values.suffix -}}
 {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
@@ -39,6 +41,18 @@
 {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 {{- define "oneprovider_service_url" -}}{{template "oneprovider_name" . }}.{{template "service_domain" . }}{{- end -}}
+*/}}
+
+{{- define "oneprovider_wait_for" -}}
+{{- $suffix := default "" .Values.suffix -}}
+{{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- define "oneprovider_name" -}}
+{{- $suffix := default "" .Values.suffix -}}
+{{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- define "oneprovider_service_url" -}}{{template "oneprovider_name" . }}.{{template "service_domain" . }}{{- end -}}
+
 
 {{- define "onezone_wait_for" -}}
 {{- $suffix := default "" .Values.suffix -}}

@@ -1,33 +1,38 @@
 dependencies:
 - condition: ""
   enabled: false
+  import-values: null
   name: onezone
-  repository: file://onezone
+  repository: file://../onezone
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: oneprovider
-  repository: file://oneprovider
+  repository: file://../oneprovider
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
-  name: onedata-cli
-  repository: file://onedata-cli
+  import-values: null
+  name: oneprovider
+  repository: file://../oneprovider
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
-  name: oneclient
-  repository: file://oneclient
+  import-values: null
+  name: oneprovider
+  repository: file://../oneprovider
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: onedata-chart-utils
-  repository: file://onedata-chart-utils
+  repository: file://../onedata-chart-utils
   tags: null
   version: 0.1.0
-digest: sha256:df4d8ec9c5f2f6a02f30429ffdc058a4881c74bd51fb6cd80c227194f9df6c32
-generated: 2017-03-16T22:54:11.227543721+01:00
+digest: sha256:a8f2e8045e03e910efc699292784fe60ad22b8bc200a2918d669842b8df936d8
+generated: 2017-05-11T12:45:09.604080631+02:00

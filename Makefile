@@ -41,14 +41,17 @@ onedata-chart-utils: build-onedata-chart-utils
 volumes-test: test-volume-s3 test-volume-ceph test-volume-nfs
 helm-test-volumes: helm-test-volume-s3 helm-test-volume-ceph helm-test-volume-nfs
 
-
-
 build-%:
 	if [ -f $*/requirements.yaml ]; then helm dependency update $*; fi
 	helm package $*
 
+build-onedata:
+	if [ -f onedata/requirements.yaml ] && [ `grep "alias:" -c onedata/requirements.yaml` -ne 0 ]; then ./requirement-alias.sh generate onedata; fi
+
+
 install-%:
 	if [ -f $*/requirements.yaml ]; then helm dependency update $*; fi
+	#if [ -f $*/requirements.yaml ] && [ `grep "alias:" -c $*/requirements.yaml` -ne 0 ]; then ./requirement-alias.sh generate $*; fi
 	helm install $*
 
 test-%: build-onedata-chart-utils

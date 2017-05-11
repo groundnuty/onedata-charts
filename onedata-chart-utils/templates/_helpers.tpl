@@ -17,9 +17,13 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s-%s" .Release.Name $name $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-spec).
-*/}}
+{{- define "fullname-alias-bug" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- $suffix := default "" "" -}}
+{{- printf "%s-%s-%s" .Release.Name $name $suffix | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- define "service_url-alias-bug" -}}{{template "fullname-alias-bug" . }}.{{ template "service_domain" .}}{{- end -}}
+
 
 {{define "global_region"}}cluster{{end}}
 {{define "global_tld"}}local{{end}}

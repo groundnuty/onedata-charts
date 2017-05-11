@@ -1,0 +1,107 @@
+* version of the component/service
+<pre>
+Oneprovider 3.0.0.14
+Onezone 3.0.0.14
+Oneclient 3.0.0.14
+</pre>
+
+*  the supported platforms (Operating System and Cloud Management Frameworks)
+<pre>
+Oneclient:
+- any platform that supports Docker Engine (>11.2)
+- Ubuntu 14.04, 15.04, 16.04
+- SL6
+- CentOS 7
+- Fedora 23
+
+Onezone and Oneprovider:
+- any platform that supports Docker Engine (>11.2)
+- Fedora 23
+- Ubuntu 16.04
+</pre>
+
+*  installation methods (for clean and upgrade installations, if it's the case; add references/links to the documentation)
+<pre>
+Clean installation:
+https://onedata.org/docs/doc/getting_started/downloading_onedata.html
+https://onedata.org/docs/doc/getting_started/admin_onedata_101.html
+
+</pre>
+
+*  list of the affected packages and/or containers, if available (ex: onedata-X.Y.X.rpm onedata-2_6_19.deb, indigodatacloud/onedata:X.Y.Z)
+<pre>
+Docker images:
+indigodatacloud/onezone:3.0.0.14
+indigodatacloud/oneprovider:3.0.0.14
+indigodatacloud/oneclient:3.0.0.14
+
+The repo with packages: http://onedata-dev-packages.cloud.plgrid.pl
+All paths below are relative to this link.
+
+"yum/fedora/23/x86_64/oneprovider-3.0.0.rc14-1.fc23.x86_64.rpm": "fedora-23-x86_64/x86_64", 
+"apt/ubuntu/xenial/pool/main/o/oneprovider/oneprovider_3.0.0.rc14-1_amd64.deb": "wily/binary-amd64", 
+
+"yum/fedora/23/x86_64/onezone-3.0.0.rc14.1.g84db4c7-1.fc23.x86_64.rpm: "fedora-23-x86_64/x86_64", 
+"apt/ubuntu/xenial/pool/main/o/onezone/onezone_3.0.0.rc14.1.g84db4c7-1_amd64.deb": "wily/binary-amd64", 
+
+"apt/ubuntu/xenial/pool/main/o/oneclient/oneclient-3.0.0.rc14-1.fc23.x86_64.rpm": "xenial/binary-amd64",
+"apt/ubuntu/wily/pool/main/o/oneclient/oneclient_3.0.0.rc14-1_amd64.deb": "wily/binary-amd64", 
+"apt/ubuntu/trusty/pool/main/o/oneclient/oneclient_3.0.0.rc14-1_amd64.deb": "trusty/binary-amd64"
+"yum/centos/7x/x86_64/oneclient-3.0.0.rc14-1.el7.centos.x86_64.rpm": "centos-7-x86_64/x86_64", 
+"yum/fedora/23/x86_64/oneprovider-3.0.0.rc14-1.fc23.x86_64.rpm": "fedora-23-x86_64/x86_64", 
+</pre>
+
+* specific product release notes for the version included in INDIGO-1 release (highlights on the improvements, new features and/or important fixes)
+<pre>
+Onezone:
+- Spaces size in provider pop up in Onezone
+- Copy provider hostname to clipboard in Onezone
+- Get support token from drop-down menu of space
+- Reordered panels in Onezone sidebar, automatic context expand
+- Group management panel: list groups and join a group
+- Added "pending" status of provider
+- Enable graceful stop on SIGTERM 
+- Access token input is now readonly
+- Allow using external access token to authorize REST operations
+ 
+Oneprovider: 
+- Fixing hanging "Waiting for Onezone session" message
+- Improved performance of files list
+- Fixing missing file after upload (finalising file upload after RPC completion)
+- Provider name in top bar
+- Select files range with shift
+- Fixing infinite data-space loading when one of supporting providers does not work or there are no providers at all
+- Enable graceful stop on SIGTERM
+ 
+Onepanel:
+- Allow integer for provider geo long/lat
+- Add cookie authentication
+- Add mount in root and read-only options
+ 
+Oneclient:
+- Ported S3 and Swift helpers to OSX
+- Disabled directIO detection on macOS
+- Ported oneclient to OSX
+- Switch to low-level FUSE API and fibers.
+
+* documentation (links to the GitBook documentation)
+<pre>
+https://www.gitbook.com/book/indigo-dc/onedata-documentation-indigo-dc/welcome
+</pre>
+
+*  list of RfCs (if the development was followed through tasks (OpenProject, GitHub) please add references; if the release addresses bug-fixes tracked in GitHub please add references)
+<pre>
+All if your tickets are in a closed system. We can provide a list of some of them that relate to indigo, although it will be more and less the same list as in the product release notes (as notes are derived from tickets).
+</pre>
+
+* support information (team support mailing-list and/or GGUS SupportUnit, if already exixsting and you wish to use it also for INDIGO-DC services, otherwise you can use here the "INDIGO - DataCloud CatchAll GGUS Support Unit":https://wiki.egi.eu/wiki/GGUS:INDIGO_DataCloud_Catch-all_FAQ)
+<pre>
+Onedata provides live support chat:
+https://www.hipchat.com/g3ST0Aaci
+
+We are willing to use the GGSU system.
+</pre>
+
+ 
+
+

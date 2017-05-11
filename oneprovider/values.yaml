@@ -10,6 +10,14 @@ wait_for:
   image: groundnuty/k8s-wait-for
   imagePullPolicy: IfNotPresent
 
+# suffix: "1"
+
+# oneclient:
+#   suffix: "1"
+
+# onedata-cli:
+#   suffix: "1"
+
 # #nfs:
 # #  enabled: true
 # #ceph:

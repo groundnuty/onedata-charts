@@ -1,0 +1,54 @@
+session_name: session - ${USER} (${RELEASE_NAME})
+windows:
+- window_name: oneproviders
+  layout: even-horizontal
+  shell_command_before:
+    - export RELEASE_NAME=$RELEASE_NAME
+  panes:
+    - shell_command:
+        - export PROVIDER_ID=
+        - kubectl exec -it $(kubectl get pod -l"chart=oneprovider${PROVIDER_ID}-0.1.0,release=${RELEASE_NAME}" -o name  | cut -d '/' -f 2) bash
+        - op_worker attach-direct
+    - shell_command:
+        - export PROVIDER_ID=-1
+        - kubectl exec -it $(kubectl get pod -l"chart=oneprovider${PROVIDER_ID}-0.1.0,release=${RELEASE_NAME}" -o name  | cut -d '/' -f 2) bash
+        - op_worker attach-direct
+    - shell_command:
+        - export PROVIDER_ID=-2
+        - kubectl exec -it $(kubectl get pod -l"chart=oneprovider${PROVIDER_ID}-0.1.0,release=${RELEASE_NAME}" -o name  | cut -d '/' -f 2) bash
+        - op_worker attach-direct
+
+- window_name: oneclinets
+  layout: even-horizontal
+  #options:
+  #  synchronize-panes: on
+  shell_command_before:
+    - export RELEASE_NAME=$RELEASE_NAME
+  panes:
+    - shell_command:
+        - export ONECLINET_ID=
+        - kubectl exec -it $(kubectl get pod -l"app=${RELEASE_NAME}-oneclient${ONECLIENT_ID},release=${RELEASE_NAME}" -o name | cut -d '/' -f 2) bash
+        - export ID=0
+        - naive() { apt install -y git python3 python3-pip ; pip3 install humanize ; git -C / clone https://github.com/bkryza/naive-bench.git ; }
+        - alias bench="/naive-bench/naive-bench.py -f 1000 -s 1MB -b 512KB -t 5 -F -c"
+        - alias ctf="echo $ONECLIENT_PROVIDER_HOST > $ID"
+        - cd /mnt/oneclient
+        - ls -l
+    - shell_command:
+        - export ONECLIENT_ID=-1
+        - kubectl exec -it $(kubectl get pod -l"app=${RELEASE_NAME}-oneclient${ONECLIENT_ID},release=${RELEASE_NAME}" -o name | cut -d '/' -f 2) bash
+        - export ID=1
+        - naive() { apt install -y git python3 python3-pip ; pip3 install humanize ; git -C / clone https://github.com/bkryza/naive-bench.git ; }
+        - alias bench="/naive-bench/naive-bench.py -f 1000 -s 1MB -b 512KB -t 5 -F -c"
+        - alias ctf="echo $ONECLIENT_PROVIDER_HOST > $ID"
+        - cd /mnt/oneclient
+        - ls -l
+    - shell_command:
+        - export ONECLIENT_ID=-2
+        - kubectl exec -it $(kubectl get pod -l"app=${RELEASE_NAME}-oneclient${ONECLIENT_ID},release=${RELEASE_NAME}" -o name | cut -d '/' -f 2) bash
+        - export ID=2
+        - naive() { apt install -y git python3 python3-pip ; pip3 install humanize ; git -C / clone https://github.com/bkryza/naive-bench.git ; }
+        - alias bench="/naive-bench/naive-bench.py -f 1000 -s 1MB -b 512KB -t 5 -F -c"
+        - alias ctf="echo $ONECLIENT_PROVIDER_HOST > $ID"
+        - cd /mnt/oneclient
+        - ls -l

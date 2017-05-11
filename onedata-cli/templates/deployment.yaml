@@ -46,6 +46,8 @@ spec:
             value: "https://{{ template "oneprovider_service_url" . }}"
           - name: ONEPANEL_HOST
             value: "https://{{ template "oneprovider_service_url" . }}:9443"
+          - name: TERM
+            value: "xterm-256color"
         command:
          - "sh"
          - "-c"

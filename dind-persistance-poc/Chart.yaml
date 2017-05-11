@@ -1,0 +1,8 @@
+name: dind-persistance-poc
+version: 0.1.0
+home: https://github.com/onedata/charts
+maintainers:
+  - name: Michal Orzechowski
+    email: orzechowski.michal@gmail.com
+description: A prof of concept for a pod persistance with docker containers and dind.
+engine: gotpl

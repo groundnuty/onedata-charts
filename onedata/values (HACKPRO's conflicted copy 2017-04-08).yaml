@@ -6,14 +6,14 @@ global:
   imagePullSecrets: [ docker-onedata-org-morzech ]
 
 imagePullPolicy: &imagePullPolicy IfNotPresent
-`
+
 oneclient_image: &oneclient_image docker.onedata.org/oneclient:3.0.0-rc14
-oneprovider_image: &oneprovider_image docker.onedata.org/oneprovider:3.0.0-rc14-417ba07
+oneprovider_image: &oneprovider_image docker.onedata.org/oneprovider:3.0.0-rc14
 onezone_image: &onezone_image docker.onedata.org/onezone:3.0.0-rc14
 onedata-cli_image: &onedata-cli_image docker.onedata.org/rest-cli:3.0.0-rc14
 
 # oneclient_image: &oneclient_image docker.onedata.org/oneclient:3.0.0-rc13-1
-# oneprovider_image: &oneprovider_image docker.onedata.org/oneprovider:3.0.0-rc13-mo-2
+# oneprovider_image: &oneprovider_image docker.onedata.org/oneprovider:3.0.0-rc13-3-mo-2
 # onezone_image: &onezone_image docker.onedata.org/onezone:3.0.0-rc13-1
 # onedata-cli_image: &onedata-cli_image docker.onedata.org/rest-cli:3.0.0-rc12
 

@@ -1,20 +1,22 @@
 dependencies:
 - name: onezone
   version: 0.1.0
-  repository: file://onezone
+  repository: file://../onezone
 
 - name: oneprovider
   version: 0.1.0
-  repository: file://oneprovider
+  repository: file://../oneprovider
 
-- name: onedata-cli
+- name: oneprovider
+  alias: oneprovider-1
   version: 0.1.0
-  repository: file://onedata-cli
+  repository: file://../oneprovider
 
-- name: oneclient
+- name: oneprovider
+  alias: oneprovider-2
   version: 0.1.0
-  repository: file://oneclient
+  repository: file://../oneprovider
 
 - name: onedata-chart-utils
   version: 0.1.0
-  repository: file://onedata-chart-utils
+  repository: file://../onedata-chart-utils

@@ -1,0 +1,35 @@
+# Default values for dind-persistance-poc.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+ dockerd-entrypoint.sh '--insecure-registry=10.6.224.182:5000' &  while !  docker ps 1>/dev/null 2>/dev/null  ; do echo 'n' ; sleep 1 ; done ;
+
+ IMAGE='10.6.224.182:5000/k8s/dind-persistance-poc/vol-2017-03-28t194946_000'  ; if docker pull $IMAGE ; then docker pull $IMAGE ; else docker tag scratch bla  ; fi
+
+persistence:
+  # Check if image exists if not create it
+  # cdev_registry: 10.6.224.182:5000
+  #
+  # date command: date +"%Y-%m-%dT%H%M%S%z"
+  dind_image: docker:17.04.0-dind
+  load_from: &load_from 10.6.224.182:5000/k8s/dind-persistance-poc/vol-2017-03-28T194946+0200
+  save_to:  *load_from
+
+  dind_image: docker:17.04.0-dind
+  enabled: true
+
+
+
+
+fromimage:
+imagePullPolicy: IfNotPresent
+serviceType: ClusterIP
+
+
+image: gcr.io/google-samples/nfs-server:1.1
+imagePullPolicy: IfNotPresent
+serviceType: ClusterIP
+
+
+
+

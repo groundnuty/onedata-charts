@@ -8,3 +8,7 @@ imagePullPolicy: IfNotPresent
 wait_for:
   image: groundnuty/k8s-wait-for
   imagePullPolicy: IfNotPresent
+
+onedata_cli:
+  image: docker.onedata.org/rest-cli:3.0.0-rc12
+  imagePullPolicy: IfNotPresent

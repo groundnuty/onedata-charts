@@ -43,26 +43,11 @@ spec:
       subdomain: {{ template "fullname-alias-bug" . }}
 {{ include "imagePullSecrets" . | indent 6 }}
       volumes:
-      # - name: nfs
-      #   nfs:
-      #     server: {{ template "volume-nfs_service_url" .}}
-      #     path: "/exports"
-      #     readOnly: false
-      - name: persistence
-        emptyDir: 
-          medium: "Memory"
-      - name: storage
-        emptyDir:
-          medium: "Memory"
       - name: nfs
-        emptyDir: 
-          medium: "Memory"
-      - name: ceph
-        emptyDir:
-          medium: "Memory"
-      - name: s3
-        emptyDir:
-          medium: "Memory"
+        nfs:
+          server: {{ template "volume-nfs_service_url" .}}
+          path: "/exports"
+          readOnly: false
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image }}
@@ -96,6 +81,11 @@ spec:
                   cluster_manager stop ;
                   /etc/init.d/couchbase-server stop ;
                   pkill -f oneprovider.py ;
+        command:
+         - "sh"
+         - "-c"
+         - >
+           sleep infinity ;
         readinessProbe:
           exec:
             command:
@@ -131,25 +121,19 @@ spec:
                   local:
                     type: "posix"
                     mountPoint: "/volumes/storage"
-                  # nfs:
-                  #   type: "posix"
-                  #   mountPoint: "/nfs"
-                  # s3:
-                  #  type: "s3"
-                  #  hostname: {{ template "volume-s3_service_url" . }}:8000
-                  #  bucketName: test1
-                  #  accessKey: accessKey1
-                  #  secretKey: verySecretKey1
-                  #  insecure: true
-                  s3:
-                    type: "posix"
-                    mountPoint: "/volumes/s3"
                   nfs:
                     type: "posix"
-                    mountPoint: "/volumes/nfs"
+                    mountPoint: "/nfs"
+                  s3:
+                   type: "s3"
+                   hostname: {{ template "volume-s3_service_url" . }}:8000
+                   bucketName: test1
+                   accessKey: accessKey1
+                   secretKey: verySecretKey1
+                   insecure: true
                   ceph:
                     type: "posix"
-                    mountPoint: "/volumes/ceph"
+                    mountPoint: "/mnt"
                   #S3:
                   #  type: s3
                   #  hostname: {{ template "volume-s3_service_url" . }}:8000
@@ -174,15 +158,5 @@ spec:
                     password: "password"
                     userRole: "regular"
         volumeMounts:
-        # - mountPath: /nfs
-        #   name: nfs
-        - mountPath: /volumes/s3
-          name: s3
-        - mountPath: /volumes/nfs
+        - mountPath: /nfs
           name: nfs
-        - mountPath: /volumes/ceph
-          name: ceph
-        - mountPath: /volumes/persistence
-          name: persistence
-        - mountPath: /volumes/storage
-          name: storage

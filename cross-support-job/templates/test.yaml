@@ -1,0 +1,69 @@
+{{- define "providerName" -}}
+{{- printf "%s-%s" "oneprovider" . | trimSuffix "-" -}}
+{{- end -}}
+
+
+{{- $r := . -}}
+
+{{- define "releaseName" -}}
+{{- $name := default .Release.Name  .Values.releaseName -}}
+{{- printf "%s" $name}}
+{{- end -}}
+
+{{- range .Values.spaces }}
+{{- $space := . }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "fullname" $r }}-{{ $space.name }}
+  labels:
+    app: {{ template "fullname" $r }}
+    chart: "{{ $r.Chart.Name }}-{{ $r.Chart.Version }}"
+    release: "{{ $r.Release.Name }}"
+    heritage: "{{ $r.Release.Service }}"
+spec:
+  template:
+    metadata:
+      name: "{{ $r.Release.Name}}"
+      labels:
+        app: {{ template "fullname" $r }}
+        chart: "{{ $r.Chart.Name }}-{{ $r.Chart.Version }}"
+        release: "{{ $r.Release.Name }}"
+        heritage: "{{ $r.Release.Service }}"
+    spec:
+{{ include "imagePullSecrets" $r | indent 6 }}
+      restartPolicy: Never
+      containers:
+      - name: {{ $r.Chart.Name }}
+        image: {{ $r.Values.image }}
+        imagePullPolicy: {{ $r.Values.imagePullPolicy }}
+        env:
+          - name: ONEZONE_HOST
+            value: "https://{{ template "releaseName" $r }}-onezone.{{ template "service_domain" $r }}:8443"
+          - name: ONEPANEL_BASIC_AUTH
+            value: "admin:password"
+          - name: ONEZONE_API_KEY
+            value: "supplied_at_runtime"
+        args:
+          - "-c"
+          - >
+            echo "-k" > ~/.curlrc ;
+            onedata-select-version "3.0.0-rc12" ;
+            export ONEZONE_API_KEY="$(curl -k -u admin:password -X POST -d '' -H 'content-type: application/json' $ONEZONE_HOST/api/v3/onezone/user/client_tokens | jq -r .token )" ;
+            echo "ONEZONE_HOST=$ONEZONE_HOST" ;
+            echo "ONEPANEL_BASIC_AUTH=$ONEPANEL_BASIC_AUTH" ;
+            echo "ONEZONE_API_KEY=$ONEZONE_API_KEY" ;
+            echo "Create space and request support" ;
+            export SPACE_ID="$(onezone-rest-cli -vvv  createSpace name=='{{ $space.name }}' 2>&1 | grep 'location:' | sed -nr 's#.*/spaces/(.*)#\1#p' | tr -d ' \r')" ;
+            echo "Space $SPACE_ID created" ;
+            {{- range $space.supports }}
+            export ONEPROVIDER_HOST='https://{{ template "releaseName" $r }}-{{ template "providerName" .provider }}.{{ template "service_domain" $r }}:8443' ;
+            export ONEPANEL_HOST='https://{{ template "releaseName" $r }}-{{ template "providerName" .provider }}.{{ template "service_domain" $r }}:9443' ;
+            echo "Support space $SPACE_ID with provider $ONEPROVIDER_HOST" ;
+            export SPACE_TOKEN=$(onezone-rest-cli getSpaceProviderToken id=$SPACE_ID | jq -r '.token') ;
+            onepanel-rest-cli getStorages | jq -r '.' ;
+            onepanel-rest-cli supportSpace size:='{{ .size }}'  storageName=='{{ .storage_name }}' token==$SPACE_TOKEN | jq -r '.' ;
+            {{- end -}}
+
+{{- end -}}
