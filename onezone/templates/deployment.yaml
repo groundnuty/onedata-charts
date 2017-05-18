@@ -23,6 +23,10 @@ spec:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        resources:
+          requests:
+            cpu: "2"
+            memory: 4Gi
         ports:
           - containerPort: 53
           - containerPort: 80
@@ -51,6 +55,7 @@ spec:
                   pkill -f onezone.py ;
         readinessProbe:
           exec:
+            # A hack, that makes sure that a pod reports ready when onezone has really started
             command:
               - "/bin/bash"
               - "-c"
@@ -58,13 +63,7 @@ spec:
                 service=zone ;
                 user="$(curl -k -u admin:password -sS --tlsv1.2   -X GET 'https://localhost:9443/api/v3/onepanel/users/user')";
                 if [[ "$user" == "" ]] ; then exit 1; else  exit 0;  fi ;
-  # managers=$(curl -k -u admin:password -sS --tlsv1.2 -X GET "https://localhost:9443/api/v3/onepanel/$service/managers") ;
-# databases=$(curl -k -u admin:password -sS --tlsv1.2 -X GET "https://localhost:9443/api/v3/onepanel/$service/databases") ;
-# workers=$(curl -k -u admin:password -sS --tlsv1.2 -X GET "https://localhost:9443/api/v3/onepanel/$service/workers") ;
-# if [[ $(echo -e  "$managers\n$databases\n$workers" | cut -d ":" -f 2 | tr -d \"} | grep -v running | tr -d "\n") == "" ]] ; then exit 0 ; else exit 1; fi ;
         env:
-          #- name: ONEPANEL_DEBUG_MODE
-          #  value: "true"
           - name: ONEPANEL_BATCH_MODE
             value: "true"
           - name: ONEZONE_CONFIG

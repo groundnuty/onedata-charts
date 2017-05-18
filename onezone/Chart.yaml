@@ -1,8 +1,14 @@
 name: onezone
-version: 0.1.0
-home: https://github.com/onedata/onezone
+version: 0.2.0
+description: Onezone is a Onedata service enabling federation of storage providers and user authentication.
+keywords:
+  - onedata
+  - onezone
+home: https://www.onedata.org
+sources: 
+  - https://github.com/onedata/onezone
 maintainers:
   - name: Michal Orzechowski
     email: orzechowski.michal@gmail.com
-description: Onezone is a Onedata service enabling federation of storage providers and user authentication.
 engine: gotpl
+appVersion: 3.0.0-rc14

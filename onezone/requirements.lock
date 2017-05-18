@@ -1,9 +1,10 @@
 dependencies:
 - condition: ""
   enabled: false
+  import-values: null
   name: onedata-chart-utils
-  repository: file://onedata-chart-utils
+  repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.1.0
-digest: sha256:7c4f753f9e192c46d9e880a7d4a1a2b4f5a07c57f069331c51ecee93dcf4be62
-generated: 2017-03-15T15:49:10.107930907+01:00
+  version: 0.2.1
+digest: sha256:11613b1c5f97e902614bad084960c52a56fb2f2cd4de76e6dbbaf8fa07a98a64
+generated: 2017-05-18T10:50:49.429909561+02:00
