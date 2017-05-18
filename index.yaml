@@ -1,7 +1,7 @@
 apiVersion: v1
 entries:
   onedata-chart-utils:
-  - created: 2017-05-18T10:50:15.316011671+02:00
+  - created: 2017-05-19T01:00:54.071067245+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 1c2f5119a82b9e5f9cf0e350eab4af242e1277c3ee338564ebd2365d85a2eb2a
     engine: gotpl
@@ -16,7 +16,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.1.tgz
     version: 0.2.1
-  - created: 2017-05-18T10:50:15.315607485+02:00
+  - created: 2017-05-19T01:00:54.070628765+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 27b83894c5dbc82c88b5e3865e512f551b7d9193633cf1a4c36b5a4c5973fd7d
     engine: gotpl
@@ -31,4 +31,24 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.0.tgz
     version: 0.2.0
-generated: 2017-05-18T10:50:15.314934311+02:00
+  onezone:
+  - appVersion: 3.0.0-rc14
+    created: 2017-05-19T01:00:54.071843902+02:00
+    description: Onezone is a Onedata service enabling federation of storage providers
+      and user authentication.
+    digest: 3e41d2be9ac659bccd2abff4cd4ccb80149ae40b8540832069a5ca9dd97caa16
+    engine: gotpl
+    home: https://www.onedata.org
+    keywords:
+    - onedata
+    - onezone
+    maintainers:
+    - email: orzechowski.michal@gmail.com
+      name: Michal Orzechowski
+    name: onezone
+    sources:
+    - https://github.com/onedata/onezone
+    urls:
+    - https://groundnuty.github.io/onedata-charts/onezone-0.2.0.tgz
+    version: 0.2.0
+generated: 2017-05-19T01:00:54.069963679+02:00
