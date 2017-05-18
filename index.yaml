@@ -1,7 +1,22 @@
 apiVersion: v1
 entries:
   onedata-chart-utils:
-  - created: 2017-05-18T03:29:04.197560758+02:00
+  - created: 2017-05-18T10:50:15.316011671+02:00
+    description: A set helper go templates functions for Onedata charts
+    digest: 1c2f5119a82b9e5f9cf0e350eab4af242e1277c3ee338564ebd2365d85a2eb2a
+    engine: gotpl
+    home: https://www.onedata.org
+    keywords:
+    - onedata
+    - utils
+    maintainers:
+    - email: orzechowski.michal@gmail.com
+      name: Michal Orzechowski
+    name: onedata-chart-utils
+    urls:
+    - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.1.tgz
+    version: 0.2.1
+  - created: 2017-05-18T10:50:15.315607485+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 27b83894c5dbc82c88b5e3865e512f551b7d9193633cf1a4c36b5a4c5973fd7d
     engine: gotpl
@@ -14,6 +29,6 @@ entries:
       name: Michal Orzechowski
     name: onedata-chart-utils
     urls:
-    - onedata-chart-utils-0.2.0.tgz
+    - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.0.tgz
     version: 0.2.0
-generated: 2017-05-18T03:29:04.196912408+02:00
+generated: 2017-05-18T10:50:15.314934311+02:00
