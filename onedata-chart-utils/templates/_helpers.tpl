@@ -32,9 +32,9 @@ Logic for generating service urls
 */}}
 {{define "global_region"}}{{required "A non empty region name is required!" .Values.global.region}}{{end}}
 {{define "global_tld"}}{{required "A non empty top level domain name is required!" .Values.global.tld}}{{end}}
-{{- define "cluster_domain" -}}{{.Release.Namespace}}.svc.{{template "global_region" .}}.{{template "global_tld" .}}{{end}}
-{{- define "service_domain" -}}svc.{{template "cluster_domain" .}} {{end}}
-{{- define "service_namespace_domain" -}}{{.Release.Namespace}}.svc.{{template "cluster_domain" .}} {{end}}
+{{- define "cluster_domain" -}}{{template "global_region" .}}.{{template "global_tld" .}}{{end}}
+{{- define "service_domain" -}}svc.{{template "cluster_domain" .}}{{end}}
+{{- define "service_namespace_domain" -}}{{.Release.Namespace}}.svc.{{template "cluster_domain" .}}{{end}}
 {{- define "service_url" -}}{{template "fullname" . }}.{{ template "service_namespace_domain" .}}{{- end -}}
 
 {{/*
@@ -42,21 +42,21 @@ ImagePullSecrets template for yaml format
 */}}
 {{- define "imagePullSecrets" -}}
   {{- if .Values.imagePullSecrets -}}
-      {{- "imagePullSecrets:"  | indent 4 -}}
+      {{- "imagePullSecrets:" -}}
       {{- range .Values.imagePullSecrets }}
-        {{- cat "- name:" . | indent 6 -}}
+        {{- cat "- name:" . | indent 2 -}}
       {{- end -}}
   {{- else if .Values.global -}}
     {{- if .Values.global.imagePullSecrets -}}
-        {{- "imagePullSecrets:" | indent 4 -}}
+        {{- "imagePullSecrets:" -}}
         {{- range .Values.global.imagePullSecrets }}
-            {{- cat "- name:" . | indent 6 -}}
+            {{- cat "- name:" . | indent 2 -}}
         {{- end -}}
     {{- else -}}
-        {{- "imagePullSecrets: []" | indent 4 -}}
+        {{- "imagePullSecrets: []" -}}
     {{- end -}}
   {{- else -}}
-    {{- "imagePullSecrets: []" | indent 4 -}}
+    {{- "imagePullSecrets: []" -}}
   {{- end -}}
 {{- end -}}
 
@@ -82,9 +82,9 @@ ImagePullSecrets template for json format
       {{- "]," -}}
      {{- end -}}
   {{- else -}}
-    {{- "\"imagePullSecrets\": [" -}}
+    {{- "\"imagePullSecrets\": []," -}}
   {{- end -}}
   {{- else -}}
-    {{- "\"imagePullSecrets\": [" -}}
+    {{- "\"imagePullSecrets\": []," -}}
   {{- end -}}
 {{- end -}}
