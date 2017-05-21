@@ -28,8 +28,8 @@ spec:
             },
             {
                 "name": "get-client-token",
-                "image": "{{ .Values.wait_for.image }}",
-                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+                "image": "{{ .Values.onedata_cli.image }}",
+                "imagePullPolicy": "{{ .Values.onedata_cli.imagePullPolicy }}",
 {{ include "imagePullSecrets_json" . | indent 16 }}
                 "env": [
                     {
@@ -43,7 +43,7 @@ spec:
                 ],
                 "command": [
                     "sh", "-c",
-                    "onezone-rest-cli -k getClientToken | jq -r \".token\" > /shared/token ;"
+                    "curl -k -u $ONEZONE_BASIC_AUTH -X POST -d \"\" -H \"content-type: application/json\" $ONEZONE_HOST/api/v3/onezone/user/client_tokens | jq -r \".token\" > /shared/token  ;"
                 ],
                 "volumeMounts": [
                     {
@@ -84,10 +84,14 @@ spec:
          - "sh"
          - "-c"
          - >
-           sleep 3000 ;
            export ONECLIENT_ACCESS_TOKEN=$(cat /shared/token) ;
            cat /shared/token ;
+           {{ if .Values.debug_mode }}
+           oneclient "/mnt/oneclient" ;
+           sleep infinity ;
+           {{ else }}
            oneclient -f "/mnt/oneclient" ;
+           {{ end }}
         readinessProbe:
           exec:
             command:

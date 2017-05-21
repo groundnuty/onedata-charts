@@ -2,9 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-image: docker.onedata.org/oneclient:3.0.0-rc12
+image: onedata/oneclient:3.0.0-rc14
 imagePullPolicy: IfNotPresent
 
 wait_for:
-  image: groundnuty/k8s-wait-for
+  image: groundnuty/k8s-wait-for:0.1
   imagePullPolicy: IfNotPresent
+
+onedata_cli:
+  image: onedata/rest-cli:3.0.0-rc14
+  imagePullPolicy: IfNotPresent
+
+# by default the main process in a onezone container is
+# a oneclient command running in foreground
+# this flag takes oneclient to background and launches
+# while sleep loop as primary container process
+debug_mode: false
