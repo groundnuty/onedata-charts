@@ -10,29 +10,29 @@ metadata:
 spec:
   type: "{{ .Values.serviceType }}"
   ports:
-    - name: p53
+    - name: dns
       port: 53
-    - name: p80
+    - name: http
       port: 80
-    - name: p443
+    - name: https
       port: 443
-    - name: p5555
+    - name: oneclient
       port: 5555
-    - name: p5556
+    - name: oneprovider-to-oneproviders
       port: 5556
-    - name: p6665
+    - name: rtransfer-data-1
       port: 6665
-    - name: p6666
+    - name: rtransfer-data-2
       port: 6666
-    - name: p7443
+    - name: oneprovider-to-oneozne-metadata
       port: 7443
-    - name: p8443
+    - name: rest-cdmi
       port: 8443
-    - name: p8876
+    - name: rtransfer-porotcol-1
       port: 8876
-    - name: p8877
+    - name: rtransfer-porotcol-2
       port: 8877
-    - name: p9443
+    - name: onepanel
       port: 9443
   selector:
     app: {{ template "fullname" . }}

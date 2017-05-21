@@ -2,61 +2,50 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-image: docker.onedata.org/oneprovider:3.0.0-rc12
+image: onedata/oneprovider:3.0.0-rc14
 imagePullPolicy: IfNotPresent
 serviceType: ClusterIP
 
-wait_for:
-  image: groundnuty/k8s-wait-for
-  imagePullPolicy: IfNotPresent
+# When running multiple copies of oneprovider as a part of a helm release
+# each of oneprovider charts may be give a suffix, so that service names
+# do not collide. This is propagated to all oneprovider chart dependencies.
+suffix: &providerSuffix ''
 
-# #nfs:
-# #  enabled: true
-# #ceph:
-# #  enabled: true
-# s33: []
-# s:
-# s3:
-#   - name: s3-1
-#     enabled: true
-#     s3server-dependency: s3server
-#   - name: s3-2
-#     enabled: true
-#     s3server-dependency: s3server
+# An address of Onezone service (mandatory)
+# support for multiple scenarios, see examples bellow
+onezone_service_url: &onezone_service_url {}
+  # 1. empty dictionary is equivalent to "type: auto-generate"
+  # however by setting type explicitly you cannot overwrite it from
+  # helm command line with "--set", when passing it to child subcharts
+  # hence empty dictionary is a best default
 
+  # 2. no address is needed
+  # the assumption is made that onezone is part of the same helm release
+  # type: auto-generate
 
-# local:
-#   enabled: true
+  # 3. a full address of an onezone (without http(s))
+  # note that external onezones will not be able to communicate to k8s deployed oneprovider
+  # type: http
+  # address: beta.onedata.org
 
-# hostname: node1
+  # 4. only service name is sufficient, the namespace parameter is optional
+  # type: k8s-service
+  # service_name: rc14-onezone
+  # namespace: default
 
-# # ceph-base:
-#   replicaCount: 1
-#   image:
-#     repository: docker.onedata.org/ceph-base
-#     tag: "latest"
-#     pullPolicy: IfNotPresent
-#   service:
-#     type: ClusterIP
-#   docker-secret : docker-onedata-org-morzech
+# Coordinates of a oneprovider on a onezone map
+geoLatitude: 55.333
+geoLongitude: 55.333
 
-# s3server:
-#   replicaCount: 1
-#   image:
-#     repository: scality/s3server
-#     tag: "latest"
-#     pullPolicy: IfNotPresent
-#   service:
-#     type: ClusterIP
-#   docker-secret : docker-onedata-org-morzech
+# Create oneclient instance that will connect to this oneprovider
+oneclient:
+  enabled: true
+  onezone_service_url: *onezone_service_url
+  suffix: *providerSuffix
 
-# nfs-server:
-#   replicaCount: 1
-#   image:
-#     repository: gcr.io/google-samples/nfs-server
-#     tag: 1.1
-#     pullPolicy: IfNotPresent
-#   service:
-#     type: ClusterIP
-#   docker-secret : docker-onedata-org-morzech
-
+# Create onedata-cli instance that will have a context of this oneprovider
+# and this provider onezone
+onedata-cli:
+  enabled: true
+  suffix: *providerSuffix
+  onezone_service_url: *onezone_service_url

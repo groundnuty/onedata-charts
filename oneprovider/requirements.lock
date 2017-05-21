@@ -1,27 +1,24 @@
 dependencies:
 - condition: ""
   enabled: false
-  name: volume-nfs
-  repository: file://volume-nfs
+  import-values: null
+  name: oneclient
+  repository: file://../oneclient
   tags: null
-  version: 0.1.0
+  version: 0.2.1
 - condition: ""
   enabled: false
-  name: volume-s3
-  repository: file://volume-s3
+  import-values: null
+  name: onedata-cli
+  repository: file://../onedata-cli
   tags: null
-  version: 0.1.0
+  version: 0.2.1
 - condition: ""
   enabled: false
-  name: volume-ceph
-  repository: file://volume-ceph
-  tags: null
-  version: 0.1.0
-- condition: ""
-  enabled: false
+  import-values: null
   name: onedata-chart-utils
-  repository: file://onedata-chart-utils
+  repository: file://../onedata-chart-utils
   tags: null
-  version: 0.1.0
-digest: sha256:b524ae8fac051788767e3f12777e924d2776e268f315e16048dc38e2c59f34d9
-generated: 2017-03-16T22:53:02.673100272+01:00
+  version: 0.2.3
+digest: sha256:f52bbd842c6e0700fb0d0afd9bd482f68fbcc74ec57ae9f0cf053f99b64a12a2
+generated: 2017-05-21T13:58:09.363688372+02:00

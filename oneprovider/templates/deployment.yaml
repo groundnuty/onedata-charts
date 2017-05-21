@@ -17,41 +17,25 @@ spec:
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         release: "{{ .Release.Name }}"
         heritage: "{{ .Release.Service }}"
-      annotations:
-        pod.beta.kubernetes.io/init-containers: '[
-            {
-                "name": "wait-for-volume-s3-init",
-                "image": "{{ .Values.wait_for.image }}",
-                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
-{{ include "imagePullSecrets_json" . | indent 16 }}
-                "args": [
-                    "job", "{{ .Release.Name }}-volume-s3-init"
-                ]
-            },
-            {
-                "name": "wait-for-volume-ceph",
-                "image": "{{ .Values.wait_for.image }}",
-                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
-{{ include "imagePullSecrets_json" . | indent 16 }}
-                "args": [
-                    "pod", "-lapp={{ .Release.Name }}-volume-ceph"
-                ]
-            }
-        ]'
     spec:
       hostname: node1
       subdomain: {{ template "fullname" . }}
 {{ include "imagePullSecrets" . | indent 6 }}
       volumes:
-      - name: nfs
-        nfs:
-          server: {{ template "volume-nfs_service_url" .}}
-          path: "/exports"
-          readOnly: false
+      - name: persistence
+        emptyDir:
+          medium: "Memory"
+      - name: posix
+        emptyDir:
+          medium: "Memory"
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        resources:
+          requests:
+            cpu: "2"
+            memory: 4Gi
         ports:
           - containerPort: 53
           - containerPort: 80
@@ -87,8 +71,6 @@ spec:
                 user="$(curl -k -u admin:password -sS --tlsv1.2 -X GET 'https://localhost:9443/api/v3/onepanel/users/user')";
                 if [[ "$user" == "" ]] ; then exit 1; else  exit 0;  fi ;
         env:
-          #- name: ONEPANEL_DEBUG_MODE
-          #  value: "true"
           - name: ONEPANEL_BATCH_MODE
             value: "true"
           - name: ONEPROVIDER_CONFIG
@@ -109,35 +91,15 @@ spec:
                   nodes:
                     - "n1"
                 storages:
-                  local:
+                  posix:
                     type: "posix"
                     mountPoint: "/volumes/storage"
-                  nfs:
-                    type: "posix"
-                    mountPoint: "/nfs"
-                  s3:
-                   type: "s3"
-                   hostname: {{ template "volume-s3_service_url" . }}:8000
-                   bucketName: test1
-                   accessKey: accessKey1
-                   secretKey: verySecretKey1
-                   insecure: true
-                  ceph:
-                    type: "posix"
-                    mountPoint: "/mnt"
-                  #S3:
-                  #  type: s3
-                  #  hostname: {{ template "volume-s3_service_url" . }}:8000
-                  #  bucketName: test1
-                  #  accessKey: accessKey1
-                  #  secretKey: verySecretKey1
-                  #  insecure: true
               oneprovider:
                 register: true
                 name: {{ template "fullname" . }}
-                redirectionPoint: "https://{{ template "service_url" . }}" # OR IP ADDRESS
-                geoLatitude: 55.333
-                geoLongitude: 55.333
+                redirectionPoint: "https://{{ template "service_url" . }}"
+                geoLatitude: {{ .Values.geoLatitude }}
+                geoLongitude: {{ .Values.geoLongitude }}
               onezone:
                 domainName: "{{ template "onezone_service_url" . }}"
               onepanel:
@@ -149,5 +111,7 @@ spec:
                     password: "password"
                     userRole: "regular"
         volumeMounts:
-        - mountPath: /nfs
-          name: nfs
+        - mountPath: /volumes/persistence
+          name: persistence
+        - mountPath: /volumes/storage
+          name: posix
