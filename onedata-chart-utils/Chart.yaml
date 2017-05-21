@@ -1,5 +1,5 @@
 name: onedata-chart-utils
-version: 0.2.1
+version: 0.2.2
 description: A set helper go templates functions for Onedata charts
 keywords:
   - onedata
