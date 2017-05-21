@@ -1,7 +1,12 @@
 name: onedata-cli
-version: 0.1.0
+version: 0.2.1
+description: A set of CLI commands to interact with Onedata REST API.
+keywords:
+  - onedata
+  - onedata-cli
 home: https://github.com/onedata/
 maintainers:
   - name: Michal Orzechowski
     email: orzechowski.michal@gmail.com
-description: A set of CLI commands to interact with Onedata REST API.
+engine: gotpl
+appVersion: 3.0.0-rc14
