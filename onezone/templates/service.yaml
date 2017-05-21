@@ -18,21 +18,21 @@ spec:
       port: 443
     - name: oneclient
       port: 5555
-    - name: OneproviderToOneproviders
+    - name: oneprovider-to-oneproviders
       port: 5556
-    - name: rtransferData1
+    - name: rtransfer-data-1
       port: 6665
-    - name: rtransferData2
+    - name: rtransfer-data-2
       port: 6666
-    - name: oneproviderTOoneozneMetadata
+    - name: oneprovider-to-oneozne-metadata
       port: 7443
-    - name: REST&CDMI
+    - name: rest-cdmi
       port: 8443
-    - name: rtransferPorotcol1
+    - name: rtransfer-porotcol-1
       port: 8876
-    - name: rtransferPorotcol2
+    - name: rtransfer-porotcol-2
       port: 8877
-    - name: Onepanel
+    - name: onepanel
       port: 9443
   selector:
     app: {{ template "fullname" . }}

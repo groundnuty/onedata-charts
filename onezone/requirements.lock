@@ -5,6 +5,6 @@ dependencies:
   name: onedata-chart-utils
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.1
-digest: sha256:11613b1c5f97e902614bad084960c52a56fb2f2cd4de76e6dbbaf8fa07a98a64
-generated: 2017-05-18T10:50:49.429909561+02:00
+  version: 0.2.2
+digest: sha256:eba7ab0c334fedebbc3e2a1d3fda8f82177576419798b81a54350d4a562d8d12
+generated: 2017-05-21T13:19:44.800286015+02:00
