@@ -5,20 +5,20 @@ dependencies:
   name: oneclient
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.1
+  version: 0.2.2
 - condition: ""
   enabled: false
   import-values: null
   name: onedata-cli
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.1
+  version: 0.2.2
 - condition: ""
   enabled: false
   import-values: null
   name: onedata-chart-utils
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.3
-digest: sha256:4cf533accb531df60574a20e7740c800af552e5e5cf0f97da978cd9963a56708
-generated: 2017-05-21T21:45:36.217280805+02:00
+  version: 0.2.4
+digest: sha256:aeb4998177ddf45d9093aa023353b161c326c79d06b041bec909b94b89466799
+generated: 2017-05-24T18:44:39.101082225+02:00

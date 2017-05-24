@@ -13,22 +13,19 @@ suffix: &providerSuffix ''
 
 # An address of Onezone service (mandatory)
 # support for multiple scenarios, see examples bellow
-onezone_service_url: &onezone_service_url {}
-  # 1. empty dictionary is equivalent to "type: auto-generate"
-  # however by setting type explicitly you cannot overwrite it from
-  # helm command line with "--set", when passing it to child subcharts
-  # hence empty dictionary is a best default
-
-  # 2. no address is needed
+onezone_service_url: &onezone_service_url
+  # 1. no address is needed
   # the assumption is made that onezone is part of the same helm release
-  # type: auto-generate
+  # the disableSuffix flag, prevents suffix to be appended to onezone service name
+  type: auto-generate
+  disableSuffix: true
 
-  # 3. a full address of an onezone (without http(s))
+  # 2. a full address of an onezone (without http(s))
   # note that external onezones will not be able to communicate to k8s deployed oneprovider
   # type: http
   # address: beta.onedata.org
 
-  # 4. only service name is sufficient, the namespace parameter is optional
+  # 3. only service name is sufficient, the namespace parameter is optional
   # type: k8s-service
   # service_name: rc14-onezone
   # namespace: default
@@ -39,13 +36,13 @@ geoLongitude: 55.333
 
 # Create oneclient instance that will connect to this oneprovider
 oneclient:
-  enabled: true
+  enabled: false
   onezone_service_url: *onezone_service_url
   suffix: *providerSuffix
 
 # Create onedata-cli instance that will have a context of this oneprovider
 # and this provider onezone
 onedata-cli:
-  enabled: true
+  enabled: false
   suffix: *providerSuffix
   onezone_service_url: *onezone_service_url
