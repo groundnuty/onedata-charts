@@ -13,19 +13,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 */}}
 {{- define "fullname" -}}
   {{- $name := default .Chart.Name .Values.nameOverride -}}
-  {{- $suffix := default "" .Values.suffix -}}
+  {{- $suffix := default "" .Values.suffix | toString -}}
   {{- printf "%s-%s-%s" .Release.Name $name $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{/*
-Because of experimental alias requirements plugin there are issues when generating a dns name of aliased oneproviders
-*/}}
-{{- define "fullname-alias-bug" -}}
-  {{- $name := default .Chart.Name .Values.nameOverride -}}
-  {{- $suffix := default "" "" -}}
-  {{- printf "%s-%s-%s" .Release.Name $name $suffix | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-{{- define "service_url-alias-bug" -}}{{template "fullname-alias-bug" . }}.{{ template "service_namespace_domain" .}}{{- end -}}
 
 {{/*
 Logic for generating service urls

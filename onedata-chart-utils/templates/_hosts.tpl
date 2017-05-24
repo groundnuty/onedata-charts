@@ -4,11 +4,17 @@
   {{- $suffix := default "" .Values.suffix -}}
   {{- printf "%s-%s-%s" .Release.Name "volume-s3-init" $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
 {{- define "volume-s3_name" -}}
   {{- if .Values.volume_s3_service_url -}}
     {{- if eq .Values.volume_s3_service_url.type "auto-generate" -}}
-      {{- $suffix := default "" .Values.suffix -}}
-      {{- printf "%s-%s-%s" .Release.Name "volume-s3" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- if .Values.volume_s3_service_url.disableSuffix -}}
+        {{- $suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-s3" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-s3" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
     {{- else if eq .Values.volume_s3_service_url.type "k8s-service" -}}
       {{- if .Values.volume_s3_service_url.namespace -}}
         {{/* TODO */}}
@@ -19,8 +25,8 @@
       {{/* TODO */}}
     {{- end -}}
   {{- else -}}
-    {{- $suffix := default "" .Values.suffix -}}
-    {{- printf "%s-%s-%s" .Release.Name "volume-s3" $suffix | trunc 63 | trimSuffix "-" -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-s3" $suffix | trunc 63 | trimSuffix "-" -}}
   {{- end -}}
 {{- end -}}
 
@@ -48,11 +54,17 @@
   {{- $suffix := default "" .Values.suffix -}}
   {{- printf "%s-%s-%s" .Release.Name "volume-nfs" $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
 {{- define "volume-nfs_name" -}}
   {{- if .Values.volume_nfs_service_url -}}
     {{- if eq .Values.volume_nfs_service_url.type "auto-generate" -}}
-      {{- $suffix := default "" .Values.suffix -}}
-      {{- printf "%s-%s-%s" .Release.Name "volume-nfs" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- if .Values.volume_nfs_service_url.disableSuffix -}}
+        {{- $suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-nfs" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-nfs" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
     {{- else if eq .Values.volume_nfs_service_url.type "k8s-service" -}}
       {{- if .Values.volume_nfs_service_url.namespace -}}
         {{/* TODO */}}
@@ -63,8 +75,8 @@
       {{/* TODO */}}
     {{- end -}}
   {{- else -}}
-    {{- $suffix := default "" .Values.suffix -}}
-    {{- printf "%s-%s-%s" .Release.Name "volume-nfs" $suffix | trunc 63 | trimSuffix "-" -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-nfs" $suffix | trunc 63 | trimSuffix "-" -}}
   {{- end -}}
 {{- end -}}
 
@@ -92,11 +104,17 @@
   {{- $suffix := default "" .Values.suffix -}}
   {{- printf "%s-%s-%s" .Release.Name "volume-ceph" $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
 {{- define "volume-ceph_name" -}}
   {{- if .Values.volume_ceph_service_url -}}
     {{- if eq .Values.volume_ceph_service_url.type "auto-generate" -}}
-      {{- $suffix := default "" .Values.suffix -}}
-      {{- printf "%s-%s-%s" .Release.Name "volume-ceph" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- if .Values.volume_ceph_service_url.disableSuffix -}}
+        {{- $suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-ceph" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-ceph" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
     {{- else if eq .Values.volume_ceph_service_url.type "k8s-service" -}}
       {{- if .Values.volume_ceph_service_url.namespace -}}
         {{/* TODO */}}
@@ -107,8 +125,8 @@
       {{/* TODO */}}
     {{- end -}}
   {{- else -}}
-    {{- $suffix := default "" .Values.suffix -}}
-    {{- printf "%s-%s-%s" .Release.Name "volume-ceph" $suffix | trunc 63 | trimSuffix "-" -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-ceph" $suffix | trunc 63 | trimSuffix "-" -}}
   {{- end -}}
 {{- end -}}
 
@@ -136,11 +154,17 @@
   {{- $suffix := default "" .Values.suffix -}}
   {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
 {{- define "oneprovider_name" -}}
   {{- if .Values.oneprovider_service_url -}}
     {{- if eq .Values.oneprovider_service_url.type "auto-generate" -}}
-      {{- $suffix := default "" .Values.suffix -}}
-      {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- if .Values.oneprovider_service_url.disableSuffix -}}
+        {{- $suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
     {{- else if eq .Values.oneprovider_service_url.type "k8s-service" -}}
       {{- if .Values.oneprovider_service_url.namespace -}}
         {{/* TODO */}}
@@ -151,8 +175,8 @@
       {{/* TODO */}}
     {{- end -}}
   {{- else -}}
-    {{- $suffix := default "" .Values.suffix -}}
-    {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "oneprovider" $suffix | trunc 63 | trimSuffix "-" -}}
   {{- end -}}
 {{- end -}}
 
@@ -180,11 +204,17 @@
   {{- $suffix := default "" .Values.suffix -}}
   {{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
 {{- define "onezone_name" -}}
   {{- if .Values.onezone_service_url -}}
     {{- if eq .Values.onezone_service_url.type "auto-generate" -}}
-      {{- $suffix := default "" .Values.suffix -}}
-      {{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- if .Values.onezone_service_url.disableSuffix -}}
+        {{- $suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
     {{- else if eq .Values.onezone_service_url.type "k8s-service" -}}
       {{- if .Values.onezone_service_url.namespace -}}
         {{/* TODO */}}
@@ -195,8 +225,8 @@
       {{/* TODO */}}
     {{- end -}}
   {{- else -}}
-    {{- $suffix := default "" .Values.suffix -}}
-    {{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "onezone" $suffix | trunc 63 | trimSuffix "-" -}}
   {{- end -}}
 {{- end -}}
 
@@ -224,11 +254,17 @@
   {{- $suffix := default "" .Values.suffix -}}
   {{- printf "%s-%s-%s" .Release.Name "" $suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
 {{- define "_name" -}}
   {{- if .Values._service_url -}}
     {{- if eq .Values._service_url.type "auto-generate" -}}
-      {{- $suffix := default "" .Values.suffix -}}
-      {{- printf "%s-%s-%s" .Release.Name "" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- if .Values._service_url.disableSuffix -}}
+        {{- $suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
     {{- else if eq .Values._service_url.type "k8s-service" -}}
       {{- if .Values._service_url.namespace -}}
         {{/* TODO */}}
@@ -239,8 +275,8 @@
       {{/* TODO */}}
     {{- end -}}
   {{- else -}}
-    {{- $suffix := default "" .Values.suffix -}}
-    {{- printf "%s-%s-%s" .Release.Name "" $suffix | trunc 63 | trimSuffix "-" -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "" $suffix | trunc 63 | trimSuffix "-" -}}
   {{- end -}}
 {{- end -}}
 

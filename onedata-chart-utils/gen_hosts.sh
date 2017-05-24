@@ -26,11 +26,17 @@ cat <<EOF>> $FILENAME
   {{- \$suffix := default "" .Values.suffix -}}
   {{- printf "%s-%s-%s" .Release.Name "${wait_for}" \$suffix | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
 {{- define "${service}_name" -}}
   {{- if .Values.${service/-/_}_service_url -}}
     {{- if eq .Values.${service/-/_}_service_url.type "auto-generate" -}}
-      {{- \$suffix := default "" .Values.suffix -}}
-      {{- printf "%s-%s-%s" .Release.Name "${service}" \$suffix | trunc 63 | trimSuffix "-" -}}
+      {{- if .Values.${service/-/_}_service_url.disableSuffix -}}
+        {{- \$suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "${service}" \$suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- \$suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "${service}" \$suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
     {{- else if eq .Values.${service/-/_}_service_url.type "k8s-service" -}}
       {{- if .Values.${service/-/_}_service_url.namespace -}}
         {{/* TODO */}}
@@ -41,8 +47,8 @@ cat <<EOF>> $FILENAME
       {{/* TODO */}}
     {{- end -}}
   {{- else -}}
-    {{- \$suffix := default "" .Values.suffix -}}
-    {{- printf "%s-%s-%s" .Release.Name "${service}" \$suffix | trunc 63 | trimSuffix "-" -}}
+        {{- \$suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "${service}" \$suffix | trunc 63 | trimSuffix "-" -}}
   {{- end -}}
 {{- end -}}
 
