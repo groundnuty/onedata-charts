@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   oneclient:
   - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.562240322+02:00
+    created: 2017-05-24T18:27:47.771816244+02:00
     description: Oneclient is the Onedata command line interface for mounting distributed
       virtual filesystem on local machines
     digest: 2e22bedb5cb33ec8fe7df6f5fb3fd10119316ed2761b723e4ee91a9f1e0f0a45
@@ -21,7 +21,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/oneclient-0.2.1.tgz
     version: 0.2.1
   - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.561387159+02:00
+    created: 2017-05-24T18:27:47.770986158+02:00
     description: Oneclient is the Onedata command line interface for mounting distributed
       virtual filesystem on local machines
     digest: b83710f6cbb1050d672e21d355244024214fdb00dec8652084295807d0c03f36
@@ -39,28 +39,23 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/oneclient-0.2.0.tgz
     version: 0.2.0
-  onedata:
-  - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.565195063+02:00
-    description: Onedata is a distributed data management platform providing eventually
-      consistent, POSIX-compliant virtual filesystem
-    digest: 5a5ef74a365fd85f644e446b5f41bb692e3b5d254fd47ab55ac162fe71cdfefd
+  onedata-chart-utils:
+  - created: 2017-05-24T18:27:47.774346502+02:00
+    description: A set helper go templates functions for Onedata charts
+    digest: a8562f61aba759f8853a520154923eeb46dae7db54f5ad5471e097e207475ff7
     engine: gotpl
     home: https://www.onedata.org
     keywords:
     - onedata
-    - onedata-meta-chart
+    - utils
     maintainers:
     - email: orzechowski.michal@gmail.com
       name: Michal Orzechowski
-    name: onedata
-    sources:
-    - https://github.com/onedata/onedata
+    name: onedata-chart-utils
     urls:
-    - https://groundnuty.github.io/onedata-charts/onedata-0.2.0.tgz
-    version: 0.2.0
-  onedata-chart-utils:
-  - created: 2017-05-22T22:53:41.566993095+02:00
+    - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.4.tgz
+    version: 0.2.4
+  - created: 2017-05-24T18:27:47.773849476+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 41030a161aa9f32df838864a68258c617f4c53426c6d3d542e8a4ed5a679f55f
     engine: gotpl
@@ -75,7 +70,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.3.tgz
     version: 0.2.3
-  - created: 2017-05-22T22:53:41.566498602+02:00
+  - created: 2017-05-24T18:27:47.773304628+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 913de1b3b748c9a2c58624e80aec58d3e6b464b2abff4fdbc235121093c8c6b1
     engine: gotpl
@@ -90,7 +85,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.2.tgz
     version: 0.2.2
-  - created: 2017-05-22T22:53:41.566021329+02:00
+  - created: 2017-05-24T18:27:47.772749014+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 1c2f5119a82b9e5f9cf0e350eab4af242e1277c3ee338564ebd2365d85a2eb2a
     engine: gotpl
@@ -105,7 +100,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.1.tgz
     version: 0.2.1
-  - created: 2017-05-22T22:53:41.565598922+02:00
+  - created: 2017-05-24T18:27:47.772252621+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 27b83894c5dbc82c88b5e3865e512f551b7d9193633cf1a4c36b5a4c5973fd7d
     engine: gotpl
@@ -122,7 +117,7 @@ entries:
     version: 0.2.0
   onedata-cli:
   - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.568448768+02:00
+    created: 2017-05-24T18:27:47.77582344+02:00
     description: A set of CLI commands to interact with Onedata REST API.
     digest: 69e1bbc623e11464257ca30044318e0c67bc1284719efda9839dbc75c0e810d6
     engine: gotpl
@@ -138,7 +133,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onedata-cli-0.2.1.tgz
     version: 0.2.1
   - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.567676489+02:00
+    created: 2017-05-24T18:27:47.775044993+02:00
     description: A set of CLI commands to interact with Onedata REST API.
     digest: 164a5e25f0d29a6e628d2ce1c63a12cfefdd2053a60f175254dcf3fe52114d97
     engine: gotpl
@@ -155,7 +150,7 @@ entries:
     version: 0.2.0
   oneprovider:
   - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.57153346+02:00
+    created: 2017-05-24T18:27:47.777905749+02:00
     description: The main data management component of Onedata, deployed at each storage
       provider site, responsible for unifying and controlling access to data over
       low level storage resources of the provider.
@@ -176,7 +171,7 @@ entries:
     version: 0.2.0
   onezone:
   - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.573085274+02:00
+    created: 2017-05-24T18:27:47.780390798+02:00
     description: Onezone is a Onedata service enabling federation of storage providers
       and user authentication.
     digest: efd011b4c95ad13f1f7229207ad94a7ec1b2309c013fac1f87dd779948054264
@@ -195,10 +190,10 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onezone-0.2.1.tgz
     version: 0.2.1
   - appVersion: 3.0.0-rc14
-    created: 2017-05-22T22:53:41.572309291+02:00
+    created: 2017-05-24T18:27:47.779579314+02:00
     description: Onezone is a Onedata service enabling federation of storage providers
       and user authentication.
-    digest: 975eb29ab6698117ae1470bfc97b0ad4224ab6d78060c5ff4afee40e66936d1f
+    digest: 3e41d2be9ac659bccd2abff4cd4ccb80149ae40b8540832069a5ca9dd97caa16
     engine: gotpl
     home: https://www.onedata.org
     keywords:
@@ -213,4 +208,4 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onezone-0.2.0.tgz
     version: 0.2.0
-generated: 2017-05-22T22:53:41.56032677+02:00
+generated: 2017-05-24T18:27:47.770072978+02:00
