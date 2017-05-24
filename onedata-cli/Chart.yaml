@@ -1,5 +1,5 @@
 name: onedata-cli
-version: 0.2.1
+version: 0.2.2
 description: A set of CLI commands to interact with Onedata REST API.
 keywords:
   - onedata
