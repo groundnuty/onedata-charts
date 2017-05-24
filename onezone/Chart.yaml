@@ -1,5 +1,5 @@
 name: onezone
-version: 0.2.1
+version: 0.2.2
 description: Onezone is a Onedata service enabling federation of storage providers and user authentication.
 keywords:
   - onedata
