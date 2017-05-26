@@ -4,25 +4,34 @@ metadata:
   name: {{ template "fullname" . }}
   labels:
     app: {{ template "fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name  }}
+    heritage: {{ .Release.Service }}
 spec:
   template:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
+        chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
     spec:
-      hostname: {{ .Chart.Name }}
+      hostname: {{ .Chart.Name | quote }}
       subdomain: {{ template "fullname" . }}
 {{ include "imagePullSecrets" . | indent 6 }}
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+          - name: SCALITY_ACCESS_KEY_ID
+            value: {{ .Values.key_id }}
+          - name: SCALITY_SECRET_ACCESS_KEY
+            value: {{ .Values.access_key }}
+          - name: LOG_LEVEL
+            value: {{ .Values.scality_loglevel }}
+          - name: HOST_NAME
+            value: supplied_at_runtime
         command:
          - "sh"
          - "-c"
@@ -37,4 +46,4 @@ spec:
               - "sh"
               - "-c"
               - >
-                curl --output /dev/null --silent --connect-timeout 2 localhost:8000 ;
+                curl --output /dev/null --silent --connect-timeout 2 localhost:{{ .Values.scality_port }} ;

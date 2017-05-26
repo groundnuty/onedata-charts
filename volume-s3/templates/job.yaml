@@ -4,18 +4,18 @@ metadata:
   name: {{ template "fullname" . }}-init
   labels:
     app: {{ template "fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   template:
     metadata:
-      name: "{{.Release.Name}}"
+      name: {{ .Release.Name }}
       labels:
         app: {{ template "fullname" . }}-init
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
+        chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+        release: {{ .Release.Name  }}
+        heritage: {{ .Release.Service }}
       annotations:
         pod.beta.kubernetes.io/init-containers: '[
             {
@@ -33,15 +33,15 @@ spec:
 {{ include "imagePullSecrets" . | indent 6 }}
       containers:
       - name: aws
-        image: {{ .Values.init_job.image }}
+        image: {{ .Values.aws_client_image }}
         command:
           - "sh"
           - "-c"
           - >
             echo '[scality]' > ~/.aws/credentials ;
-            echo 'aws_access_key_id = {{ .Values.init_job.aws_access_key_id }}' >> ~/.aws/credentials ;
-            echo 'aws_secret_access_key = {{ .Values.init_job.aws_secret_access_key }}' >> ~/.aws/credentials ;
-            aws s3api create-bucket --endpoint-url http://{{ template "service_url" . }}:8000 --profile scality --bucket {{ .Values.init_job.bucketName }} ;
+            echo 'aws_access_key_id = {{ .Values.key_id }}' >> ~/.aws/credentials ;
+            echo 'aws_secret_access_key = {{ .Values.access_key }}' >> ~/.aws/credentials ;
+            aws s3api create-bucket --endpoint-url http://{{ template "service_url" . }}:{{ .Values.scality_port }} --profile scality --bucket {{ .Values.bucketName }} ;
             exit 0;
 
 

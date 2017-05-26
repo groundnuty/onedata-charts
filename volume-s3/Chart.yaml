@@ -1,8 +1,11 @@
 name: volume-s3
-version: 0.1.0
-home: https://github.com/onedata/charts
+version: 0.2.0
+description: S3 Scality object storage service, suitable for testing purposes.
+keywords:
+  - onedata
+  - volume-s3
+  - storage
 maintainers:
   - name: Michal Orzechowski
     email: orzechowski.michal@gmail.com
-description: S3 Scality object storage service, suitable for testing purposes.
 engine: gotpl
