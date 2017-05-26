@@ -6,6 +6,10 @@ image: onedata/oneprovider:3.0.0-rc14
 imagePullPolicy: IfNotPresent
 serviceType: ClusterIP
 
+wait_for:
+  image: groundnuty/k8s-wait-for:0.1
+  imagePullPolicy: IfNotPresent
+
 # When running multiple copies of oneprovider as a part of a helm release
 # each of oneprovider charts may be give a suffix, so that service names
 # do not collide. This is propagated to all oneprovider chart dependencies.
@@ -30,9 +34,26 @@ onezone_service_url: &onezone_service_url
   # service_name: rc14-onezone
   # namespace: default
 
-# Coordinates of a oneprovider on a onezone map
+# oneprovider name, if empty defaults to a chart name
+name: ''
+
+# Resources requested by oneprovider
+cpu: 2
+memory: 4Gi
+
+# Coordinates of a Oneprovider on a onezone map
 geoLatitude: 55.333
 geoLongitude: 55.333
+
+# List of oneprovider onepanel users with administrative privileges
+onepanel_admin_users:
+  - login: admin
+    password: password
+
+# List of oneprovider onepanel regular users
+onepanel_users:
+  - login: user
+    password: password
 
 # Create oneclient instance that will connect to this oneprovider
 oneclient:
@@ -46,3 +67,22 @@ onedata-cli:
   enabled: false
   suffix: *providerSuffix
   onezone_service_url: *onezone_service_url
+
+# Create S3 storage server and connect with oneprovider
+volume-s3:
+  enabled: false
+  suffix: *providerSuffix
+  insecure: true
+
+# Create CEPH storage server and connect with oneprovider
+volume-ceph:
+  enabled: false
+  suffix: *providerSuffix
+
+# Create NFS storage server and connect with oneprovider with tested default values
+volume-nfs:
+  enabled: false
+  suffix: *providerSuffix
+  container_mount_path: /volumes/nfs
+  storage_claim: 1T
+  mount_options: "soft,intr,timeo=10"

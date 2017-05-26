@@ -5,9 +5,9 @@ metadata:
   name: {{ template "fullname" . }}
   labels:
     app: {{ template "fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
@@ -15,27 +15,58 @@ spec:
       labels:
         app: {{ template "fullname" . }}
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
+        release: {{ .Release.Name | quote }}
+        heritage: {{ .Release.Service | quote }}
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[
+        {{- if (index .Values "volume-s3" "enabled") }}
+          {
+              "name": "wait-for-volume-s3-init",
+              "image": "{{ .Values.wait_for.image }}",
+              "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+{{ include "imagePullSecrets_json" . | indent 14 }}
+              "args": [
+                  "job", "{{ template "volume-s3_name" . }}-init"
+              ]
+          }
+        {{- end -}}
+        {{- if and (index .Values "volume-s3" "enabled") (index .Values "volume-ceph" "enabled") -}},{{- end -}}
+        {{- if (index .Values "volume-ceph" "enabled") }}
+          {
+              "name": "wait-for-volume-ceph",
+              "image": "{{ .Values.wait_for.image }}",
+              "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+{{ include "imagePullSecrets_json" . | indent 14 }}
+              "args": [
+                  "pod", "-lapp={{ template "volume-ceph_name" . }}"
+              ]
+          }
+        {{- end -}}
+        ]'
     spec:
       hostname: node1
       subdomain: {{ template "fullname" . }}
 {{ include "imagePullSecrets" . | indent 6 }}
+      {{- if (index .Values "volume-nfs" "enabled") }}
       volumes:
-      - name: persistence
-        emptyDir:
-          medium: "Memory"
-      - name: posix
-        emptyDir:
-          medium: "Memory"
+      - name: nfs
+        persistentVolumeClaim:
+          claimName: {{ template "fullname" . }}-nfs-pvc
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        {{- if or .Values.cpu .Values.memory }}
         resources:
           requests:
-            cpu: "2"
-            memory: 4Gi
+          {{- if .Values.cpu }}
+            cpu: {{ .Values.cpu }}
+          {{- end }}
+          {{- if .Values.memory }}
+            memory: {{ .Values.memory }}
+          {{- end }}
+        {{- end }}
         ports:
           - containerPort: 53
           - containerPort: 80
@@ -79,39 +110,72 @@ spec:
                 domainName: "{{ template "service_url" . }}"
                 nodes:
                   n1:
-                    hostname: "node1"
+                    hostname: node1
                 managers:
-                  mainNode: "n1"
+                  mainNode: n1
                   nodes:
-                    - "n1"
+                    - n1
                 workers:
                   nodes:
-                    - "n1"
+                    - n1
                 databases:
                   nodes:
-                    - "n1"
+                    - n1
                 storages:
                   posix:
-                    type: "posix"
-                    mountPoint: "/volumes/storage"
+                    type: posix
+                    mountPoint: /volumes/storage
+                {{- if (index .Values "volume-nfs" "enabled") }}
+                  nfs:
+                    type: posix
+                    mountPoint: {{ index .Values "volume-nfs" "container_mount_path" }}
+                {{- end }}
+                {{- if (index .Values "volume-s3" "enabled") }}
+                  s3:
+                    type: s3
+                    hostname: "{{ template "volume-s3_service_url" . }}:8000"
+                    bucketName: {{ index .Values "volume-s3" "bucketName" }}
+                    accessKey: {{ index .Values "volume-s3" "key_id" }}
+                    secretKey: {{ index .Values "volume-s3" "access_key" }}
+                    insecure: {{ index .Values "volume-s3" "insecure" }}
+                {{- end }}
+                {{- if (index .Values "volume-ceph" "enabled") }}
+                  ceph:
+                    type: ceph
+                    username: {{ index .Values "volume-ceph" "username" }}
+                    key: {{ index .Values "volume-ceph" "key" }}
+                    monitorHostname: {{ template "volume-ceph_service_url" . }}
+                    clusterName: {{ index .Values "volume-ceph" "cluster_name" }}
+                    poolName: {{ index .Values "volume-ceph" "pool_name" }}
+                {{- end }}
               oneprovider:
                 register: true
+                {{ if .Values.name -}}
+                name: {{ .Values.name }}
+                {{- else -}}
                 name: {{ template "fullname" . }}
-                redirectionPoint: "https://{{ template "service_url" . }}"
+                {{- end }}
+                redirectionPoint: https://{{ template "service_url" . }}
                 geoLatitude: {{ .Values.geoLatitude }}
                 geoLongitude: {{ .Values.geoLongitude }}
               onezone:
-                domainName: "{{ template "onezone_service_url" . }}"
+                domainName: {{ template "onezone_service_url" . }}
+              {{- if or .Values.onepanel_admin_users .Values.onepanel_users }}
               onepanel:
                 users:
-                  "admin":
-                    password: "password"
-                    userRole: "admin"
-                  "user":
-                    password: "password"
-                    userRole: "regular"
+                  {{- range .Values.onepanel_admin_users }}
+                  {{ .login }}:
+                    password: {{ .password }}
+                    userRole: admin
+                  {{- end }}
+                  {{- range .Values.onepanel_users }}
+                  {{ .login }}:
+                    password: {{ .password }}
+                    userRole: regular
+                  {{- end }}
+              {{- end }}
+        {{- if (index .Values "volume-nfs" "enabled") }}
         volumeMounts:
-        - mountPath: /volumes/persistence
-          name: persistence
-        - mountPath: /volumes/storage
-          name: posix
+          - mountPath: {{ index .Values "volume-nfs" "container_mount_path" }}
+            name: nfs
+        {{- end }}

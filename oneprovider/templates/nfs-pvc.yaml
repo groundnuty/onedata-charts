@@ -1,0 +1,18 @@
+{{- if (index .Values "volume-nfs" "enabled") }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "fullname" . }}-nfs-pvc
+  labels:
+    app: {{ template "fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    type: nfs
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ index .Values "volume-nfs" "storage_claim" }}
+{{- end }}
