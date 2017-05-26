@@ -1,0 +1,14 @@
+name: onedata
+version: 0.2.0
+description: Onedata is a distributed data management platform providing eventually consistent, POSIX-compliant virtual filesystem
+keywords:
+  - onedata
+  - onedata-meta-chart
+home: https://www.onedata.org
+sources:
+  - https://github.com/onedata/onedata
+maintainers:
+  - name: Michal Orzechowski
+    email: orzechowski.michal@gmail.com
+engine: gotpl
+appVersion: 3.0.0-rc14

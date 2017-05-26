@@ -1,0 +1,91 @@
+# Default values for onedata.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+oneclients_enabled: &oneclients_enabled true
+onedata_cli_enabled: &onedata_cli_enabled true
+s3_enabled: &s3_enabled true
+ceph_enabled: &ceph_enabled true
+nfs_enabled: &nfs_enabled true
+
+
+oneprovider:
+  oneclient:
+    enabled: *oneclients_enabled
+  onedata-cli:
+    enabled: *onedata_cli_enabled
+  volume-s3:
+    enabled: *s3_enabled
+  volume-ceph:
+    enabled: *ceph_enabled
+  volume-nfs:
+    enabled: *nfs_enabled
+
+oneprovider-1:
+  nameOverride: oneprovider
+  onezone_service_url:
+    type: auto-generate
+    disableSuffix: true
+
+  suffix: &op1s 1
+  oneclient:
+    enabled: *oneclients_enabled
+    suffix: *op1s
+  onedata-cli:
+    enabled: *onedata_cli_enabled
+    suffix: *op1s
+  volume-s3:
+    enabled: *s3_enabled
+    suffix: *op1s
+  volume-ceph:
+    enabled: *ceph_enabled
+    suffix: *op1s
+  volume-nfs:
+    enabled: *nfs_enabled
+    suffix: *op1s
+
+oneprovider-2:
+  nameOverride: oneprovider
+  onezone_service_url:
+    type: auto-generate
+    disableSuffix: true
+
+  suffix: &op2s 2
+  oneclient:
+    enabled: *oneclients_enabled
+    suffix: *op2s
+  onedata-cli:
+    enabled: *onedata_cli_enabled
+    suffix: *op2s
+  volume-s3:
+    enabled: *s3_enabled
+    suffix: *op2s
+  volume-ceph:
+    enabled: *ceph_enabled
+    suffix: *op2s
+  volume-nfs:
+    enabled: *nfs_enabled
+    suffix: *op2s
+
+oneprovider-3:
+  nameOverride: oneprovider
+  onezone_service_url:
+    type: auto-generate
+    disableSuffix: true
+
+  suffix: &op3s 3
+  oneclient:
+    enabled: *oneclients_enabled
+    suffix: *op3s
+  onedata-cli:
+    enabled: *onedata_cli_enabled
+    suffix: *op3s
+  volume-s3:
+    enabled: *s3_enabled
+    suffix: *op3s
+  volume-ceph:
+    enabled: *ceph_enabled
+    suffix: *op3s
+  volume-nfs:
+    enabled: *nfs_enabled
+    suffix: *op3s

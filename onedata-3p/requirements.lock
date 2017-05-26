@@ -1,0 +1,31 @@
+dependencies:
+- condition: ""
+  enabled: false
+  import-values: null
+  name: onezone
+  repository: https://groundnuty.github.io/onedata-charts/
+  tags: null
+  version: 0.2.3
+- condition: ""
+  enabled: false
+  import-values: null
+  name: oneprovider
+  repository: https://groundnuty.github.io/onedata-charts/
+  tags: null
+  version: 0.2.2
+- condition: ""
+  enabled: false
+  import-values: null
+  name: oneprovider
+  repository: https://groundnuty.github.io/onedata-charts/
+  tags: null
+  version: 0.2.2
+- condition: ""
+  enabled: false
+  import-values: null
+  name: oneprovider
+  repository: https://groundnuty.github.io/onedata-charts/
+  tags: null
+  version: 0.2.2
+digest: sha256:e0322c473ea383851487e64bf839c90b3da36ad27d8e97aabab7d62b8a1df6e3
+generated: 2017-05-26T04:19:35.631189872+02:00

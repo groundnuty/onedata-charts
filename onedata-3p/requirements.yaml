@@ -1,0 +1,19 @@
+dependencies:
+- name: onezone
+  version: 0.2.3
+  repository: https://groundnuty.github.io/onedata-charts/
+
+- name: oneprovider
+  alias: oneprovider-1
+  version: 0.2.2
+  repository: https://groundnuty.github.io/onedata-charts/
+
+- name: oneprovider
+  alias: oneprovider-2
+  version: 0.2.2
+  repository: https://groundnuty.github.io/onedata-charts/
+
+- name: oneprovider
+  alias: oneprovider-3
+  version: 0.2.2
+  repository: https://groundnuty.github.io/onedata-charts/
