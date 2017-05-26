@@ -4,19 +4,19 @@ metadata:
   name: {{ template "fullname" . }}
   labels:
     app: {{ template "fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   template:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
+        chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
     spec:
-      hostname: {{ .Chart.Name }}
+      hostname: {{ .Chart.Name | quote }}
       subdomain: {{ template "fullname" . }}
 {{ include "imagePullSecrets" . | indent 6 }}
       containers:
@@ -32,7 +32,6 @@ spec:
           - containerPort: 6803
           - containerPort: 6804
           - containerPort: 6805
-        {{- if .Values.pools }}
         lifecycle:
           postStart:
             exec:
@@ -43,13 +42,15 @@ spec:
                   curl --output /dev/null --silent --connect-timeout 2 localhost:6800 ;
                   while [[ $? -ne 0 ]] ; do
                     sleep 2 ;
-                    echo "Waiting for ceph to create pools" ;
+                    echo "Waiting for ceph server to start to create pools" ;
                     curl --output /dev/null --silent --connect-timeout 2 localhost:6800 ;
                   done ;
-                {{- range .Values.pools }}
-                  ceph osd pool create {{ . }} 8 ;
-                {{- end -}}
-        {{- end }}
+                  ceph osd pool create {{ .Values.pool_name }} 8 ;
+                  echo '[{{ .Values.username }}]' > /etc/ceph/ceph.{{ .Values.username }}.keyring ;
+                  echo '        key = {{ .Values.key }}' >> /etc/ceph/ceph.{{ .Values.username }}.keyring ;
+                  echo '        caps mon = "allow r"' >> /etc/ceph/ceph.{{ .Values.username }}.keyring ;
+                  echo '        caps osd = "allow rw pool={{ .Values.pool_name }}"' >>  /etc/ceph/ceph.{{ .Values.username }}.keyring ;
+                  ceph auth import -i /etc/ceph/ceph.{{ .Values.username }}.keyring ;
         livenessProbe:
           exec:
             command:
@@ -57,7 +58,3 @@ spec:
               - "-c"
               - >
                 curl --output /dev/null --silent --connect-timeout 2 localhost:6800 ;
-        securityContext:
-          privileged: true
-
-
