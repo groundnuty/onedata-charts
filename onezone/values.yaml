@@ -5,3 +5,20 @@
 image: onedata/onezone:3.0.0-rc14
 imagePullPolicy: IfNotPresent
 serviceType: ClusterIP
+
+# onezone name, if empty defaults to a chart name
+name: ''
+
+# Resources requested by onezone
+cpu: 2
+memory: 4Gi
+
+# List of onezone onepanel users with administrative privileges
+onepanel_admin_users:
+  - login: admin
+    password: password
+
+# List of onezone onepanel regular users
+onepanel_users:
+  - login: user
+    password: password

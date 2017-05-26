@@ -4,17 +4,17 @@ metadata:
   name: {{ template "fullname" . }}
   labels:
     app: {{ template "fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   template:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-        release: "{{ .Release.Name }}"
-        heritage: "{{ .Release.Service }}"
+        chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
     spec:
       hostname: node1
       subdomain: {{ template "fullname" . }}
@@ -23,10 +23,16 @@ spec:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
+        {{- if or .Values.cpu .Values.memory }}
         resources:
           requests:
-            cpu: "2"
-            memory: 4Gi
+          {{- if .Values.cpu }}
+            cpu: {{ .Values.cpu }}
+          {{- end }}
+          {{- if .Values.memory }}
+            memory: {{ .Values.memory }}
+          {{- end }}
+        {{- end }}
         ports:
           - containerPort: 53
           - containerPort: 80
@@ -69,29 +75,38 @@ spec:
           - name: ONEZONE_CONFIG
             value: |
               cluster:
-                domainName: "{{ template "service_url" . }}"
-                autoDeploy: true
+                domainName: {{ template "service_url" . }}
                 nodes:
                   n1:
-                    hostname: "node1"
+                    hostname: node1
                 managers:
-                  mainNode: "n1"
+                  mainNode: n1
                   nodes:
-                    - "n1"
+                    - n1
                 workers:
                   nodes:
-                    - "n1"
+                    - n1
                 databases:
                   nodes:
-                    - "n1"
+                    - n1
               onezone:
+                {{ if .Values.name -}}
+                name: {{ .Values.name }}
+                {{- else -}}
                 name: {{ template "fullname" . }}
-                domainName: "{{ template "service_url" . }}"
+                {{- end }}
+                domainName: {{ template "service_url" . }}
+              {{- if or .Values.onepanel_admin_users .Values.onepanel_users }}
               onepanel:
                 users:
-                  "admin":
-                    password: "password"
-                    userRole: "admin"
-                  "user":
-                    password: "password"
-                    userRole: "regular"
+                  {{- range .Values.onepanel_admin_users }}
+                  {{ .login }}:
+                    password: {{ .password }}
+                    userRole: admin
+                  {{- end }}
+                  {{- range .Values.onepanel_users }}
+                  {{ .login }}:
+                    password: {{ .password }}
+                    userRole: regular
+                  {{- end }}
+              {{- end }}
