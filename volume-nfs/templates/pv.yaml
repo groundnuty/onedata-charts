@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "fullname" . }}-pv
+  labels:
+    app: {{ template "fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    type: nfs
+  annotations:
+    volume.beta.kubernetes.io/mount-options: {{ .Values.mount_options | quote }}
+spec:
+  capacity:
+    storage: {{ .Values.storage | quote }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: {{ template "service_url" . }}
+    path: "/exports"

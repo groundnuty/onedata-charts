@@ -1,8 +1,12 @@
 name: volume-nfs
-version: 0.1.0
-home: https://github.com/onedata/charts
+version: 0.2.0
+description: A basic NFS server, suitable for testing.
+keywords:
+  - onedata
+  - volume-nfs
+  - storage
 maintainers:
   - name: Michal Orzechowski
     email: orzechowski.michal@gmail.com
-description: A basic NFS server, suitable for testing purposes.
 engine: gotpl
+appVersion: 1.1

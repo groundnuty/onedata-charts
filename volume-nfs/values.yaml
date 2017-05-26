@@ -6,4 +6,5 @@ image: gcr.io/google-samples/nfs-server:1.1
 imagePullPolicy: IfNotPresent
 serviceType: ClusterIP
 
-
+mount_options: ""
+storage: 1000T
