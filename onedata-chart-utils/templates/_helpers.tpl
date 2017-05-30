@@ -26,7 +26,7 @@ Logic for generating service urls
 {{- define "service_domain" -}}svc.{{template "cluster_domain" .}}{{end}}
 {{- define "service_namespace_domain" -}}{{.Release.Namespace}}.svc.{{template "cluster_domain" .}}{{end}}
 {{- define "service_url" -}}{{template "fullname" . }}.{{ template "service_namespace_domain" .}}{{- end -}}
-
+z
 {{/*
 ImagePullSecrets template for yaml format
 */}}
@@ -34,13 +34,13 @@ ImagePullSecrets template for yaml format
   {{- if .Values.imagePullSecrets -}}
       {{- "imagePullSecrets:" -}}
       {{- range .Values.imagePullSecrets }}
-        {{- cat "- name:" . | indent 2 -}}
+        {{- cat "\n- name:" . | indent 2 -}}
       {{- end -}}
   {{- else if .Values.global -}}
     {{- if .Values.global.imagePullSecrets -}}
         {{- "imagePullSecrets:" -}}
         {{- range .Values.global.imagePullSecrets }}
-            {{- cat "- name:" . | indent 2 -}}
+            {{- cat "\n- name:" . | indent 2 -}}
         {{- end -}}
     {{- else -}}
         {{- "imagePullSecrets: []" -}}
