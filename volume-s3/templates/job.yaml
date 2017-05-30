@@ -21,7 +21,7 @@ spec:
             {
                 "name": "wait-for-{{ .Chart.Name }}",
                 "image": "{{ .Values.wait_for.image }}",
-                "imagePullPolicy": "{{ .Values.wait_for.imagePullPolicy }}",
+                "imagePullPolicy": "{{ default .Values.wait_for.imagePullPolicy .Values.global.imagePullPolicy | default "IfNotPresent" }}",
 {{ include "imagePullSecrets_json" . | indent 16 }}
                 "args": [
                     "pod", "-lapp={{ template "fullname" . }}"
@@ -34,6 +34,7 @@ spec:
       containers:
       - name: aws
         image: {{ .Values.aws_client_image }}
+        imagePullPolicy: {{ default .Values.imagePullPolicy .Values.global.imagePullPolicy | default "IfNotPresent" }}
         command:
           - "sh"
           - "-c"
