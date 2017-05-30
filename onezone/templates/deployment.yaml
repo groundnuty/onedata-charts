@@ -22,7 +22,7 @@ spec:
       containers:
       - name: {{ .Chart.Name }}
         image: {{ .Values.image }}
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        imagePullPolicy: {{ default .Values.imagePullPolicy .Values.global.imagePullPolicy | default "IfNotPresent" }}
         {{- if or .Values.cpu .Values.memory }}
         resources:
           requests:
