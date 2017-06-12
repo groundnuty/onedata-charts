@@ -2,7 +2,26 @@ apiVersion: v1
 entries:
   landscaper-sync:
   - appVersion: 1.0.6-rc.1
-    created: 2017-06-12T21:24:39.766338395+02:00
+    created: 2017-06-12T21:27:46.683488778+02:00
+    description: Landscaper in loop mode with git repository sync
+    digest: a71e870b7ef8afe600e49cfc5eba510b58071c127eee99c0da6818f9f1dfe1bc
+    engine: gotpl
+    home: https://github.com/Eneco/landscaper/tree/master/example#using-loop-mode-with-git-repository-sync
+    keywords:
+    - landscaper
+    - git
+    - sync
+    maintainers:
+    - email: orzechowski.michal@gmail.com
+      name: Michal Orzechowski
+    name: landscaper-sync
+    sources:
+    - https://github.com/Eneco/landscaper
+    urls:
+    - https://groundnuty.github.io/onedata-charts/landscaper-sync-0.1.5.tgz
+    version: 0.1.5
+  - appVersion: 1.0.6-rc.1
+    created: 2017-06-12T21:27:46.683091037+02:00
     description: Landscaper in loop mode with git repository sync
     digest: bb5dfc8c054a27aa8e969e1872f9b6d8352332d5ee891bdb286daaf48dcc7451
     engine: gotpl
@@ -21,7 +40,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/landscaper-sync-0.1.4.tgz
     version: 0.1.4
   - appVersion: 1.0.6-rc.1
-    created: 2017-06-12T21:24:39.76592303+02:00
+    created: 2017-06-12T21:27:46.682683953+02:00
     description: Landscaper in loop mode with git repository sync
     digest: c0808bb30eecb2cb5e8e0646c1c1e30e5708eb54c73ed0d1a27656cc6d896e14
     engine: gotpl
@@ -40,7 +59,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/landscaper-sync-0.1.3.tgz
     version: 0.1.3
   - appVersion: 1.0.6-rc.1
-    created: 2017-06-12T21:24:39.765460963+02:00
+    created: 2017-06-12T21:27:46.682279081+02:00
     description: Landscaper in loop mode with git repository sync
     digest: 3b684424ad59fbb4566724c3316dd6961fb1082cb1f913a320d255019dac1dd4
     engine: gotpl
@@ -59,7 +78,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/landscaper-sync-0.1.2.tgz
     version: 0.1.2
   - appVersion: 1.0.6-rc.1
-    created: 2017-06-12T21:24:39.765049841+02:00
+    created: 2017-06-12T21:27:46.68187529+02:00
     description: Landscaper in loop mode with git repository sync
     digest: 65e6328145eaa6a827ba3796897c89c1aabe5fa3953438e5ba2a77da18bfcb94
     engine: gotpl
@@ -78,7 +97,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/landscaper-sync-0.1.1.tgz
     version: 0.1.1
   - appVersion: 1.0.6-rc.1
-    created: 2017-06-12T21:24:39.764295299+02:00
+    created: 2017-06-12T21:27:46.681471004+02:00
     description: Landscaper in loop mode with git repository sync
     digest: fb156881d1ce583a7e3725cb3908b3fe4c0f06f1c39c9aa1c2bb7a999ad6e448
     engine: gotpl
@@ -98,7 +117,7 @@ entries:
     version: 0.1.0
   oneclient:
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.769671465+02:00
+    created: 2017-06-12T21:27:46.686757166+02:00
     description: Oneclient is the Onedata command line interface for mounting distributed
       virtual filesystem on local machines
     digest: eac08f0996a20e3b8a03ac10a84e981c3c436c38794f2c537d973b8a6d7a44c4
@@ -117,7 +136,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/oneclient-0.2.4.tgz
     version: 0.2.4
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.768802309+02:00
+    created: 2017-06-12T21:27:46.685926211+02:00
     description: Oneclient is the Onedata command line interface for mounting distributed
       virtual filesystem on local machines
     digest: 32a3cde545e137f1115a89a3ed49c384dc7b6ab741d23a0ed3efc8ddb4de0855
@@ -136,7 +155,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/oneclient-0.2.2.tgz
     version: 0.2.2
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.767957737+02:00
+    created: 2017-06-12T21:27:46.685054326+02:00
     description: Oneclient is the Onedata command line interface for mounting distributed
       virtual filesystem on local machines
     digest: 2e22bedb5cb33ec8fe7df6f5fb3fd10119316ed2761b723e4ee91a9f1e0f0a45
@@ -155,7 +174,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/oneclient-0.2.1.tgz
     version: 0.2.1
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.767040413+02:00
+    created: 2017-06-12T21:27:46.684231897+02:00
     description: Oneclient is the Onedata command line interface for mounting distributed
       virtual filesystem on local machines
     digest: b83710f6cbb1050d672e21d355244024214fdb00dec8652084295807d0c03f36
@@ -174,7 +193,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/oneclient-0.2.0.tgz
     version: 0.2.0
   onedata-chart-utils:
-  - created: 2017-06-12T21:24:39.773200036+02:00
+  - created: 2017-06-12T21:27:46.691226624+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 4958bbdaf7144850105632358767340471e64794f0258d0ff80f4b7aeadf6a70
     engine: gotpl
@@ -189,7 +208,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.6.tgz
     version: 0.2.6
-  - created: 2017-06-12T21:24:39.772637769+02:00
+  - created: 2017-06-12T21:27:46.690769836+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 8206a0cec901b16bb0e179eb59fb5351e44e74df6bd50ee573c59a2c096268a8
     engine: gotpl
@@ -204,7 +223,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.5.tgz
     version: 0.2.5
-  - created: 2017-06-12T21:24:39.772137005+02:00
+  - created: 2017-06-12T21:27:46.690007997+02:00
     description: A set helper go templates functions for Onedata charts
     digest: a8562f61aba759f8853a520154923eeb46dae7db54f5ad5471e097e207475ff7
     engine: gotpl
@@ -219,7 +238,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.4.tgz
     version: 0.2.4
-  - created: 2017-06-12T21:24:39.771585437+02:00
+  - created: 2017-06-12T21:27:46.68860628+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 41030a161aa9f32df838864a68258c617f4c53426c6d3d542e8a4ed5a679f55f
     engine: gotpl
@@ -234,7 +253,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.3.tgz
     version: 0.2.3
-  - created: 2017-06-12T21:24:39.771086217+02:00
+  - created: 2017-06-12T21:27:46.688103118+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 913de1b3b748c9a2c58624e80aec58d3e6b464b2abff4fdbc235121093c8c6b1
     engine: gotpl
@@ -249,7 +268,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.2.tgz
     version: 0.2.2
-  - created: 2017-06-12T21:24:39.770538455+02:00
+  - created: 2017-06-12T21:27:46.687630643+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 1c2f5119a82b9e5f9cf0e350eab4af242e1277c3ee338564ebd2365d85a2eb2a
     engine: gotpl
@@ -264,7 +283,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/onedata-chart-utils-0.2.1.tgz
     version: 0.2.1
-  - created: 2017-06-12T21:24:39.770122189+02:00
+  - created: 2017-06-12T21:27:46.687218862+02:00
     description: A set helper go templates functions for Onedata charts
     digest: 27b83894c5dbc82c88b5e3865e512f551b7d9193633cf1a4c36b5a4c5973fd7d
     engine: gotpl
@@ -281,7 +300,7 @@ entries:
     version: 0.2.0
   onedata-cli:
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.777242457+02:00
+    created: 2017-06-12T21:27:46.694019095+02:00
     description: A set of CLI commands to interact with Onedata REST API.
     digest: 3d50ebdbc5940fb4925ccae2cdaa7515d09843f901f4ebbeeab356bc20287b8f
     engine: gotpl
@@ -297,7 +316,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onedata-cli-0.2.4.tgz
     version: 0.2.4
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.776517718+02:00
+    created: 2017-06-12T21:27:46.693315611+02:00
     description: A set of CLI commands to interact with Onedata REST API.
     digest: d78ea956f4d965e04b02e8bd8de9c9d62cb23a341dd2c9f663f2f6f0f32da297
     engine: gotpl
@@ -313,7 +332,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onedata-cli-0.2.2.tgz
     version: 0.2.2
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.77573215+02:00
+    created: 2017-06-12T21:27:46.692555826+02:00
     description: A set of CLI commands to interact with Onedata REST API.
     digest: 69e1bbc623e11464257ca30044318e0c67bc1284719efda9839dbc75c0e810d6
     engine: gotpl
@@ -329,7 +348,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onedata-cli-0.2.1.tgz
     version: 0.2.1
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.773974976+02:00
+    created: 2017-06-12T21:27:46.691844734+02:00
     description: A set of CLI commands to interact with Onedata REST API.
     digest: 164a5e25f0d29a6e628d2ce1c63a12cfefdd2053a60f175254dcf3fe52114d97
     engine: gotpl
@@ -346,7 +365,7 @@ entries:
     version: 0.2.0
   oneprovider:
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.785233841+02:00
+    created: 2017-06-12T21:27:46.701647696+02:00
     description: The main data management component of Onedata, deployed at each storage
       provider site, responsible for unifying and controlling access to data over
       low level storage resources of the provider.
@@ -366,7 +385,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/oneprovider-0.2.3.tgz
     version: 0.2.3
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.78127812+02:00
+    created: 2017-06-12T21:27:46.697832329+02:00
     description: The main data management component of Onedata, deployed at each storage
       provider site, responsible for unifying and controlling access to data over
       low level storage resources of the provider.
@@ -386,7 +405,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/oneprovider-0.2.1.tgz
     version: 0.2.1
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.779141311+02:00
+    created: 2017-06-12T21:27:46.695899766+02:00
     description: The main data management component of Onedata, deployed at each storage
       provider site, responsible for unifying and controlling access to data over
       low level storage resources of the provider.
@@ -407,7 +426,7 @@ entries:
     version: 0.2.0
   onezone:
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.788432885+02:00
+    created: 2017-06-12T21:27:46.705041234+02:00
     description: Onezone is a Onedata service enabling federation of storage providers
       and user authentication.
     digest: 9f06f93ec4655120008d3dedccbd9b805ebb7cbbbe37962dfcf18abf986d633c
@@ -426,7 +445,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onezone-0.2.4.tgz
     version: 0.2.4
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.787628314+02:00
+    created: 2017-06-12T21:27:46.704108581+02:00
     description: Onezone is a Onedata service enabling federation of storage providers
       and user authentication.
     digest: 4e92c297892e1b5f3c1a6e82b153350ce15f3ee60458963bc9a024e6e5611f13
@@ -445,7 +464,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onezone-0.2.2.tgz
     version: 0.2.2
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.786804593+02:00
+    created: 2017-06-12T21:27:46.703224007+02:00
     description: Onezone is a Onedata service enabling federation of storage providers
       and user authentication.
     digest: efd011b4c95ad13f1f7229207ad94a7ec1b2309c013fac1f87dd779948054264
@@ -464,7 +483,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/onezone-0.2.1.tgz
     version: 0.2.1
   - appVersion: 3.0.0-rc14
-    created: 2017-06-12T21:24:39.785948335+02:00
+    created: 2017-06-12T21:27:46.70239134+02:00
     description: Onezone is a Onedata service enabling federation of storage providers
       and user authentication.
     digest: 3e41d2be9ac659bccd2abff4cd4ccb80149ae40b8540832069a5ca9dd97caa16
@@ -484,7 +503,7 @@ entries:
     version: 0.2.0
   volume-ceph:
   - appVersion: latest
-    created: 2017-06-12T21:24:39.789980508+02:00
+    created: 2017-06-12T21:27:46.706685983+02:00
     description: A single container CEPH setup, suitable for testing purposes.
     digest: 5f5b926426dc861f3e6efab2a12a8c09647826aeccc520ebb8508c5d72a9091d
     engine: gotpl
@@ -500,7 +519,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/volume-ceph-0.2.1.tgz
     version: 0.2.1
   - appVersion: latest
-    created: 2017-06-12T21:24:39.789163149+02:00
+    created: 2017-06-12T21:27:46.705817278+02:00
     description: A single container CEPH setup, suitable for testing purposes.
     digest: 86aa9fa002e86d1a46b6031aa6fe6f38e16a6a64c14d22339405536e0f9b6e88
     engine: gotpl
@@ -517,7 +536,7 @@ entries:
     version: 0.2.0
   volume-nfs:
   - appVersion: "1.1"
-    created: 2017-06-12T21:24:39.791664798+02:00
+    created: 2017-06-12T21:27:46.709204503+02:00
     description: A basic NFS server, suitable for testing.
     digest: d99bb60520d852c9dae32b6ad78cf46133b556be9ebd394c4e4c9d1e7ceb57ce
     engine: gotpl
@@ -533,7 +552,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/volume-nfs-0.2.1.tgz
     version: 0.2.1
   - appVersion: "1.1"
-    created: 2017-06-12T21:24:39.790857851+02:00
+    created: 2017-06-12T21:27:46.708388877+02:00
     description: A basic NFS server, suitable for testing.
     digest: 3a3cb9efffe369e0c30ed0953e37dee803ccfc3cbbe26a141c87f6ce79c0c82e
     engine: gotpl
@@ -549,7 +568,7 @@ entries:
     - https://groundnuty.github.io/onedata-charts/volume-nfs-0.2.0.tgz
     version: 0.2.0
   volume-s3:
-  - created: 2017-06-12T21:24:39.79331042+02:00
+  - created: 2017-06-12T21:27:46.710700225+02:00
     description: S3 Scality object storage service, suitable for testing purposes.
     digest: de6af7be6ddebf2490f1a54a1e2bde18e3a436d09b7b74c1b901be0921845fa6
     engine: gotpl
@@ -564,7 +583,7 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/volume-s3-0.2.1.tgz
     version: 0.2.1
-  - created: 2017-06-12T21:24:39.792492703+02:00
+  - created: 2017-06-12T21:27:46.709977686+02:00
     description: S3 Scality object storage service, suitable for testing purposes.
     digest: 7567c1dc923dbc6a5dc4f568ac8dae0a4c5390bb42cd1474f00bb244b3c8b314
     engine: gotpl
@@ -579,4 +598,4 @@ entries:
     urls:
     - https://groundnuty.github.io/onedata-charts/volume-s3-0.2.0.tgz
     version: 0.2.0
-generated: 2017-06-12T21:24:39.763670192+02:00
+generated: 2017-06-12T21:27:46.680694265+02:00
