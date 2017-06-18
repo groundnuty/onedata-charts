@@ -4,17 +4,21 @@ metadata:
   name: {{ template "fullname" . }}
   labels:
     app: {{ template "fullname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    chart: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+  annotations:
+    version: "{{ .Chart.Version }}"
 spec:
   template:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+        chart: {{ .Chart.Name }}
         release: {{ .Release.Name }}
         heritage: {{ .Release.Service }}
+      annotations:
+        version: "{{ .Chart.Version }}"
     spec:
       hostname: {{ .Chart.Name | quote }}
       subdomain: {{ template "fullname" . }}

@@ -5,18 +5,22 @@ metadata:
   name: {{ template "fullname" . }}
   labels:
     app: {{ template "fullname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    chart: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+  annotations:
+    version: "{{ .Chart.Version }}"
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        chart: "{{ .Chart.Name }}"
         release: {{ .Release.Name | quote }}
         heritage: {{ .Release.Service | quote }}
+      annotations:
+        version: "{{ .Chart.Version }}"
       annotations:
         pod.beta.kubernetes.io/init-containers: '[
         {{- if (index .Values "volume-s3" "enabled") }}

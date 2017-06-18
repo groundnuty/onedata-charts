@@ -4,11 +4,12 @@ metadata:
   name: {{ template "fullname" . }}-pv
   labels:
     app: {{ template "fullname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    chart: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     type: nfs
   annotations:
+    version: "{{ .Chart.Version }}"
     volume.beta.kubernetes.io/mount-options: {{ .Values.mount_options | quote }}
 spec:
   capacity:

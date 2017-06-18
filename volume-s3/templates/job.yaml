@@ -4,19 +4,22 @@ metadata:
   name: {{ template "fullname" . }}-init
   labels:
     app: {{ template "fullname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    chart: {{ .Chart.Name }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+  annotations: 
+    version: "{{ .Chart.Version }}"
 spec:
   template:
     metadata:
       name: {{ .Release.Name }}
       labels:
         app: {{ template "fullname" . }}-init
-        chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+        chart: {{ .Chart.Name }}
         release: {{ .Release.Name  }}
         heritage: {{ .Release.Service }}
       annotations:
+        version: "{{ .Chart.Version }}"
         pod.beta.kubernetes.io/init-containers: '[
             {
                 "name": "wait-for-{{ .Chart.Name }}",
