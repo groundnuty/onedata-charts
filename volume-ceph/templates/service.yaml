@@ -17,4 +17,6 @@ spec:
       targetPort: 6789
   selector:
     app: {{ template "fullname" . }}
+  # TODO: The None option is specified to do not yet understood problems of communication with
+  # CEPH server when forwarding traffic via service ip
   clusterIP: None
