@@ -13,6 +13,12 @@ name: ''
 cpu: 2
 memory: 4Gi
 
+# Log level of the processes in the container
+log_level: "info"
+
+# Enable loading oneozne configuration from ONEZONE_CONFIG env variable
+onepanel_batch_mode_enabled: true
+
 # List of onezone onepanel users with administrative privileges
 onepanel_admin_users:
   - login: admin

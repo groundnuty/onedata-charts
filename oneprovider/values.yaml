@@ -45,6 +45,12 @@ memory: 4Gi
 geoLatitude: 55.333
 geoLongitude: 55.333
 
+# Log level of the processes in the container
+log_level: "info"
+
+# Enable loading oneprovider configuration from ONEPROVIDER_CONFIG env variable
+onepanel_batch_mode_enabled: true
+
 # List of oneprovider onepanel users with administrative privileges
 onepanel_admin_users:
   - login: admin
