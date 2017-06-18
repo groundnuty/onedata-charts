@@ -18,5 +18,9 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Recycle
   nfs:
-    server: {{ template "service_url" . }}
+    # TODO: The NFS server name is resolved using nodes resolve.conf
+    # here we expect that nodes resovle.conf can resolve namespaces service name
+    # to FQDN k8s domain. But this is a special case, usually NFS servers are not
+    # deployed ad-hoc :)
+    server: "{{ template "fullname" . }}.{{ .Release.Namespace }}"
     path: "/exports"

@@ -45,7 +45,8 @@ spec:
             echo '[scality]' > ~/.aws/credentials ;
             echo 'aws_access_key_id = {{ .Values.key_id }}' >> ~/.aws/credentials ;
             echo 'aws_secret_access_key = {{ .Values.access_key }}' >> ~/.aws/credentials ;
-            aws s3api create-bucket --endpoint-url http://{{ template "service_url" . }}:{{ .Values.scality_port }} --profile scality --bucket {{ .Values.bucketName }} ;
+            aws s3api create-bucket --endpoint-url http://{{ template "fullname" . }}:{{ .Values.scality_port }} --profile scality --bucket {{ .Values.bucketName }} ;
             exit 0;
+          # TODO: for some reason the s3 url does not want to be resolved with aws client hence the command $(grep search /etc/resolv.conf | cut -d ' ' -f 2)
 
 

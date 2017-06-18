@@ -137,7 +137,7 @@ spec:
                 {{- if (index .Values "volume-s3" "enabled") }}
                   s3:
                     type: s3
-                    hostname: "{{ template "volume-s3_service_url" . }}:8000"
+                    hostname: "{{ template "volume-s3_name" . }}:8000"
                     bucketName: {{ index .Values "volume-s3" "bucketName" }}
                     accessKey: {{ index .Values "volume-s3" "key_id" }}
                     secretKey: {{ index .Values "volume-s3" "access_key" }}
@@ -148,7 +148,7 @@ spec:
                     type: ceph
                     username: {{ index .Values "volume-ceph" "username" }}
                     key: {{ index .Values "volume-ceph" "key" }}
-                    monitorHostname: {{ template "volume-ceph_service_url" . }}
+                    monitorHostname: {{ template "volume-ceph_name" . }}
                     clusterName: {{ index .Values "volume-ceph" "cluster_name" }}
                     poolName: {{ index .Values "volume-ceph" "pool_name" }}
                 {{- end }}
@@ -162,6 +162,9 @@ spec:
                 redirectionPoint: https://{{ template "service_url" . }}
                 geoLatitude: {{ .Values.geoLatitude }}
                 geoLongitude: {{ .Values.geoLongitude }}
+              # TODO: make it possible for onedata services to communicate using 
+              # system configured DNS. this will allow to put here just service name
+              # instead of FQDN
               onezone:
                 domainName: {{ template "onezone_service_url" . }}
               {{- if or .Values.onepanel_admin_users .Values.onepanel_users }}

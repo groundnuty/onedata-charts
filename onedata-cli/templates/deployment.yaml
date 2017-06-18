@@ -41,15 +41,15 @@ spec:
         imagePullPolicy: {{ default .Values.imagePullPolicy .Values.global.imagePullPolicy | default "IfNotPresent" }}
         env:
           - name: ONEZONE_HOST
-            value: "https://{{ template "onezone_service_url" . }}"
+            value: "https://{{ template "onezone_name" . }}"
           - name: ONEPANEL_BASIC_AUTH
             value: "admin:password"
           - name: ONEZONE_API_KEY
             value: "supplied_at_runtime"
           - name: ONEPROVIDER_HOST
-            value: "https://{{ template "oneprovider_service_url" . }}"
+            value: "https://{{ template "oneprovider_name" . }}"
           - name: ONEPANEL_HOST
-            value: "https://{{ template "oneprovider_service_url" . }}:9443"
+            value: "https://{{ template "oneprovider_name" . }}:9443"
           - name: TERM # otherwise zsh and bash autocompletion used in this container tends to go crazy
             value: "xterm-256color"
         command:

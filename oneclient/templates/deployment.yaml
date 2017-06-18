@@ -38,7 +38,7 @@ spec:
                 "env": [
                     {
                         "name": "ONEZONE_HOST",
-                        "value": "https://{{ template "onezone_service_url" . }}"
+                        "value": "https://{{ template "onezone_name" . }}"
                     },
                     {
                         "name": "ONEZONE_BASIC_AUTH",
@@ -83,7 +83,7 @@ spec:
           - name: ONECLIENT_ACCESS_TOKEN
             value: "supplied_at_runtime"
           - name: ONECLIENT_PROVIDER_HOST
-            value: "{{ template "oneprovider_service_url" . }}"
+            value: "{{ template "oneprovider_name" . }}"
         command:
          - "sh"
          - "-c"

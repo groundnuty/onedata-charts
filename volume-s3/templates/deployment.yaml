@@ -34,13 +34,16 @@ spec:
             value: {{ .Values.access_key }}
           - name: LOG_LEVEL
             value: {{ .Values.scality_loglevel }}
+          # TODO: by setting host_name like that, we will be able to communicate with
+          # aws server just by using http://{{ template "fullname" . }}:8000 url
+          # using FQDN in it's place will not work. FQDN would need to registered
+          # as an endpoint separately
           - name: HOST_NAME
-            value: supplied_at_runtime
+            value: {{ template "fullname" . }}
         command:
          - "sh"
          - "-c"
          - >
-           export HOST_NAME=$(domainname -d) ;
            /usr/src/app/docker-entrypoint.sh npm start ;
         ports:
           - containerPort: 8000
