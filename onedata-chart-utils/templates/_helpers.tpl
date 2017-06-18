@@ -26,7 +26,7 @@ Logic for generating service urls
 {{- define "service_domain" -}}svc.{{template "cluster_domain" .}}{{end}}
 {{- define "service_namespace_domain" -}}{{.Release.Namespace}}.svc.{{template "cluster_domain" .}}{{end}}
 {{- define "service_url" -}}{{template "fullname" . }}.{{ template "service_namespace_domain" .}}{{- end -}}
-z
+
 {{/*
 ImagePullSecrets template for yaml format
 */}}
