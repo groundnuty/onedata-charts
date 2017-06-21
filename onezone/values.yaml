@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-image: onedata/onezone:3.0.0-rc14
+image: onedata/onezone:3.0.0-rc16
 imagePullPolicy: IfNotPresent
 serviceType: ClusterIP
 
