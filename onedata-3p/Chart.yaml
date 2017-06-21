@@ -1,0 +1,14 @@
+name: onedata-3p
+version: 0.2.0
+description: Complex Onedata deployment with one Onezone, three Oneproviders and S3, CEPH, NFS, POSIX backends.
+keywords:
+  - onedata
+  - onedata-meta-chart
+home: https://www.onedata.org
+sources:
+  - https://github.com/onedata/onedata
+maintainers:
+  - name: Michal Orzechowski
+    email: orzechowski.michal@gmail.com
+engine: gotpl
+appVersion: 3.0.0-rc16

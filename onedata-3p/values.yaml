@@ -1,0 +1,143 @@
+# Default values for onedata.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+oz_image: &oz_image onedata/onezone:3.0.0-rc16
+op_image: &op_image onedata/oneprovider:3.0.0-rc16
+oc_image: &oc_image onedata/oneclient:3.0.0-rc16
+cli_image: &cli_image onedata/rest-cli:3.0.0-rc16
+
+log_level: &log_level "info"
+onepanel_batch_mode_enabled: &onepanel_batch_mode_enabled true
+
+oneclients_enabled: &oneclients_enabled true
+onedata_cli_enabled: &onedata_cli_enabled true
+
+s3_enabled: &s3_enabled true
+ceph_enabled: &ceph_enabled true
+nfs_enabled: &nfs_enabled true
+
+# Those variables are the unfortunate necessity of an issue discussed here:
+# https://github.com/kubernetes/helm/issues/2479
+oneclient:
+  enabled: *oneclients_enabled
+onedata-cli:
+  enabled: *onedata_cli_enabled
+volume-s3:
+  enabled: *s3_enabled
+volume-ceph:
+  enabled: *ceph_enabled
+volume-nfs:
+  enabled: *nfs_enabled
+
+# Onezone configuration
+onezone:
+  image: *oz_image
+  onepanel_batch_mode_enabled: *onepanel_batch_mode_enabled
+  log_level: *log_level
+
+# What follows are the providers configurations for providers designated as:
+# krakow, paris, and lisbon
+oneprovider-krakow:
+  suffix: &op1s krakow
+  geoLatitude: 50.0647
+  geoLongitude: 19.9450
+
+  image: *op_image
+  onepanel_batch_mode_enabled: *onepanel_batch_mode_enabled
+  log_level: *log_level
+  nameOverride: oneprovider
+
+  onezone_service_url:
+    type: auto-generate
+    disableSuffix: true
+
+  oneclient:
+    image: *oc_image
+    debug_mode: false
+    enabled: *oneclients_enabled
+    suffix: *op1s
+    onedata_cli:
+      image: *cli_image
+  onedata-cli:
+    image: *cli_image
+    enabled: *onedata_cli_enabled
+    suffix: *op1s
+  volume-s3:
+    enabled: *s3_enabled
+    suffix: *op1s
+  volume-ceph:
+    enabled: *ceph_enabled
+    suffix: *op1s
+  volume-nfs:
+    enabled: *nfs_enabled
+    suffix: *op1s
+
+oneprovider-paris:
+  suffix: &op2s paris
+  geoLatitude: 48.8566
+  geoLongitude: 2.3522
+
+  image: *op_image
+  onepanel_batch_mode_enabled: *onepanel_batch_mode_enabled
+  log_level: *log_level
+  nameOverride: oneprovider
+
+  onezone_service_url:
+    type: auto-generate
+    disableSuffix: true
+
+  oneclient:
+    image: *oc_image
+    debug_mode: false
+    enabled: *oneclients_enabled
+    suffix: *op2s
+    onedata_cli:
+      image: *cli_image
+  onedata-cli:
+    image: *cli_image
+    enabled: *onedata_cli_enabled
+    suffix: *op2s
+  volume-s3:
+    enabled: *s3_enabled
+    suffix: *op2s
+  volume-ceph:
+    enabled: *ceph_enabled
+    suffix: *op2s
+  volume-nfs:
+    enabled: *nfs_enabled
+    suffix: *op2s
+
+oneprovider-lisbon:
+  suffix: &op3s lisbon
+  geoLatitude: 38.7223
+  geoLongitude: 9.1393
+
+  image: *op_image
+  onepanel_batch_mode_enabled: *onepanel_batch_mode_enabled
+  log_level: *log_level
+  nameOverride: oneprovider
+
+  onezone_service_url:
+    type: auto-generate
+    disableSuffix: true
+
+  oneclient:
+    image: *oc_image
+    enabled: *oneclients_enabled
+    suffix: *op3s
+    onedata_cli:
+      image: *cli_image
+  onedata-cli:
+    image: *cli_image
+    enabled: *onedata_cli_enabled
+    suffix: *op3s
+  volume-s3:
+    enabled: *s3_enabled
+    suffix: *op3s
+  volume-ceph:
+    enabled: *ceph_enabled
+    suffix: *op3s
+  volume-nfs:
+    enabled: *nfs_enabled
+    suffix: *op3s
