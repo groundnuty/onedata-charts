@@ -1,0 +1,13 @@
+name: cross-support-job-3p
+version: 0.2.0
+description: Chart that populates deployment environment created with onedata/onedata-3p chart with spaces
+keywords:
+  - onedata
+  - initialization
+  - spaces
+home: https://github.com/onedata/charts
+maintainers:
+  - name: Michal Orzechowski
+    email: orzechowski.michal@gmail.com
+engine: gotpl
+appVersion: 3.0.0-rc16

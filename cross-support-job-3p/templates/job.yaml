@@ -1,0 +1,87 @@
+{{- define "providerName" -}}
+  {{- printf "%s-%s" "oneprovider" . | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "releaseName" -}}
+  {{- $name := default .Release.Name .Values.releaseName -}}
+  {{- printf "%s" $name}}
+{{- end -}}
+
+{{- $r := . -}}
+{{- range .Values.spaces }}
+{{- $space := . }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "fullname" $r }}-{{ $space.name }}
+  labels:
+    app: {{ template "fullname" $r }}
+    chart: "{{ $r.Chart.Name }}"
+    release: "{{ $r.Release.Name }}"
+    heritage: "{{ $r.Release.Service }}"
+  annotations:
+    version: "{{ $r.Chart.Version }}"
+spec:
+  template:
+    metadata:
+      name: "{{ $r.Release.Name}}"
+      labels:
+        app: {{ template "fullname" $r }}
+        chart: "{{ $r.Chart.Name }}"
+        release: "{{ $r.Release.Name }}"
+        heritage: "{{ $r.Release.Service }}"
+      annotations:
+        version: {{ $r.Chart.Version }}
+        pod.beta.kubernetes.io/init-containers: '[
+            {
+                "name": "wait-for-release",
+                "image": "{{ $r.Values.wait_for.image }}",
+                "imagePullPolicy": "{{ default  $r.Values.wait_for.imagePullPolicy $r.Values.global.imagePullPolicy | default "IfNotPresent" }}",
+{{ include "imagePullSecrets_json" $r | indent 16 }}
+                "command": [
+                    "sh", "-c",
+                    "wait_for.sh pod -l\"release in ({{ template "releaseName" $r }}), chart notin ({{ $r.Chart.Name }})\" ;"
+                ]
+            }
+        ]'
+    spec:
+{{ include "imagePullSecrets" $r | indent 6 }}
+      restartPolicy: Never
+      containers:
+      - name: {{ $r.Chart.Name }}
+        image: {{ $r.Values.image }}
+        imagePullPolicy: {{ $r.Values.imagePullPolicy }}
+        env:
+          - name: ONEZONE_HOST
+            value: "https://{{ template "releaseName" $r }}-onezone.{{ template "service_namespace_domain" $r }}:8443"
+          - name: ONEPANEL_BASIC_AUTH
+            value: "admin:password"
+          - name: ONEZONE_API_KEY
+            value: "supplied_at_runtime"
+        args:
+          - "-c"
+          - >
+            echo "-k" > ~/.curlrc ;
+            echo "Getting first token for debug:"
+            curl -v -k -u $ONEPANEL_BASIC_AUTH -X POST -d '' -H 'content-type: application/json' $ONEZONE_HOST/api/v3/onezone/user/client_tokens ;
+            export ONEZONE_API_KEY="$(curl -k -u $ONEPANEL_BASIC_AUTH -X POST -d '' -H 'content-type: application/json' $ONEZONE_HOST/api/v3/onezone/user/client_tokens | jq -r .token)" ;
+            echo "ONEZONE_HOST=$ONEZONE_HOST" ;
+            echo "ONEPANEL_BASIC_AUTH=$ONEPANEL_BASIC_AUTH" ;
+            echo "ONEZONE_API_KEY=$ONEZONE_API_KEY" ;
+            echo "Create space and request support" ;
+            echo "Creating space {{ $space.name }}" ;
+            export SPACE_ID="$(onezone-rest-cli -vvv  createSpace name=='{{ $space.name }}' 2>&1 | grep 'location:' | sed -nr 's#.*/spaces/(.*)#\1#p' | tr -d ' \r')" ;
+            echo "Space $SPACE_ID created" ;
+            {{- range $space.supports }}
+            export ONEPROVIDER_HOST='https://{{ template "releaseName" $r }}-{{ template "providerName" .provider }}.{{ template "service_namespace_domain" $r }}:8443' ;
+            export ONEPANEL_HOST='https://{{ template "releaseName" $r }}-{{ template "providerName" .provider }}.{{ template "service_namespace_domain" $r }}:9443' ;
+            echo "Support space $SPACE_ID with provider $ONEPROVIDER_HOST" ;
+            export SPACE_TOKEN=$(onezone-rest-cli createSpaceSupportToken id=$SPACE_ID Content-type:application/json | jq -r '.token') ;
+            echo "Storages avilable on ONEPROVIDER_HOST=$ONEPROVIDER_HOST" ;
+            onepanel-rest-cli getStorages | jq -r '.ids[]' | xargs -I{} onepanel-rest-cli getStorageDetails id={} |  jq -rj '.name,":",.id,"\n"'  ;
+            export STORAGE_ID=$(onepanel-rest-cli getStorages | jq -r '.ids[]' | xargs -I{} onepanel-rest-cli getStorageDetails id={} |  jq -rj '.name,":",.id,"\n"' | grep "{{ .storage_name }}"  | cut -d ':' -f2) ;
+            echo "Using space support token $SPACE_TOKEN with storage name={{ .storage_name }} id=$STORAGE_ID " ;
+            onepanel-rest-cli supportSpace size:='{{ .size }}' storageId=="$STORAGE_ID" token==$SPACE_TOKEN | jq -r '.' ;
+            {{- end -}}
+{{- end -}}
