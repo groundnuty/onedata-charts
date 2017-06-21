@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 image: scality/s3server:41bd9ad
-aws_client_image: cgswong/aws:aws
+aws_client_image: groundnuty/docker-aws:aws
 imagePullPolicy: IfNotPresent
 serviceType: ClusterIP
 
