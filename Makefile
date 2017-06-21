@@ -2,16 +2,11 @@
 
 PREFIX = onedata-makefile-test-release
 
-all: clean test simple-deploy
+cross-support-job-3p: onedata-3p
+cross-support-job-3p: build-cross-support-job-3p
 
-simple-deploy: onedata
-
-#europe-example-region: build-europe-example-region
-
-#openstack: barbican cinder designate horizon ironic keystone glance manila memcached neutron nova rabbitmq neutron_vendor healthchecks
-#openstack: build-openstack
-
-#healthchecks: build-healthchecks
+onedata-3p: onedata-chart-utils oneprovider onezone onedata-cli oneclient
+onedata-3p: build-onedata-3p
 
 onedata: onedata-chart-utils oneprovider onezone onedata-cli oneclient
 onedata: build-onedata
@@ -28,7 +23,7 @@ oneprovider: build-oneprovider
 oneclient: onedata-chart-utils
 oneclient: build-oneclient
 
-test: test-onedata-chart-utils test-volume-s3 test-volume-ceph test-volume-nfs test-oneclient test-oneprovider test-onezone test-onedata-cli test-onedata
+test: test-onedata-chart-utils test-volume-s3 test-volume-ceph test-volume-nfs test-oneclient test-oneprovider test-onezone test-onedata-cli test-onedata test-onedata-3p test-cross-support-job-3p
 
 #volumes
 volumes: volume-s3 volume-nfs volume-ceph
@@ -40,8 +35,6 @@ onedata-chart-utils: build-onedata-chart-utils
 
 volumes-test: test-volume-s3 test-volume-ceph test-volume-nfs
 helm-test-volumes: helm-test-volume-s3 helm-test-volume-ceph helm-test-volume-nfs
-
-
 
 build-%:
 	if [ -f $*/requirements.yaml ]; then helm dependency update $*; fi
