@@ -1,11 +1,11 @@
 dependencies:
 - name: oneclient
-  version: 0.2.5
+  version: 0.2.6
   repository: https://groundnuty.github.io/onedata-charts/
   condition: oneclient.enabled
 
 - name: onedata-cli
-  version: 0.2.5
+  version: 0.2.6
   repository: https://groundnuty.github.io/onedata-charts/
   condition: onedata-cli.enabled
 
