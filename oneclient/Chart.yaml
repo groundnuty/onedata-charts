@@ -1,5 +1,5 @@
 name: oneclient
-version: 0.2.4
+version: 0.2.5
 description: Oneclient is the Onedata command line interface for mounting distributed virtual filesystem on local machines
 keywords:
   - onedata
