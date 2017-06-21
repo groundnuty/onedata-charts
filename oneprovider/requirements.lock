@@ -1,45 +1,51 @@
 dependencies:
-- condition: ""
+- alias: ""
+  condition: ""
   enabled: false
   import-values: null
   name: oneclient
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.3
-- condition: ""
+  version: 0.2.5
+- alias: ""
+  condition: ""
   enabled: false
   import-values: null
   name: onedata-cli
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.3
-- condition: ""
+  version: 0.2.5
+- alias: ""
+  condition: ""
   enabled: false
   import-values: null
   name: onedata-chart-utils
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.5
-- condition: ""
+  version: 0.2.7
+- alias: ""
+  condition: ""
   enabled: false
   import-values: null
   name: volume-s3
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.0
-- condition: ""
+  version: 0.2.2
+- alias: ""
+  condition: ""
   enabled: false
   import-values: null
   name: volume-ceph
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.0
-- condition: ""
+  version: 0.2.2
+- alias: ""
+  condition: ""
   enabled: false
   import-values: null
   name: volume-nfs
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
-  version: 0.2.0
-digest: sha256:2139eb83bf9e1595ba7c4e381dfaeb9f22bf6fbcb417d3cce186cc07d9e6a347
-generated: 2017-05-26T03:54:32.080890556+02:00
+  version: 0.2.2
+digest: sha256:abf3848ff130b41f9b4fd89dd4ed88192b33c3b4707f06578e71e3add4a1cde2
+generated: 2017-06-22T00:08:55.375365289+02:00
