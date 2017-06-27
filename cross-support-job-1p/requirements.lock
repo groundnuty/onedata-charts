@@ -11,9 +11,9 @@ dependencies:
   condition: ""
   enabled: false
   import-values: null
-  name: onedata-3p
+  name: onedata-1p
   repository: https://groundnuty.github.io/onedata-charts/
   tags: null
   version: 0.2.1
-digest: sha256:01807d86a50f83edf45b1ef35fc1c176123a6a502a06cd7748cf49726098b09b
-generated: 2017-06-27T08:11:10.00920695+02:00
+digest: sha256:8490bceca5613d487ddfe4df507becb54904130cd5d2c538845b99c4cacc79b4
+generated: 2017-06-27T08:10:59.107926582+02:00

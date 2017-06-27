@@ -135,6 +135,51 @@
   {{- end -}}
 {{- end -}}
 
+{{- define "volume-gluster_name" -}}
+  {{- if .Values.volume_gluster_service_url -}}
+    {{- if eq .Values.volume_gluster_service_url.type "auto-generate" -}}
+      {{- if .Values.volume_gluster_service_url.disableSuffix -}}
+        {{- $suffix :=  "" | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-gluster" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-gluster" $suffix | trunc 63 | trimSuffix "-" -}}
+      {{- end -}}
+    {{- else if eq .Values.volume_gluster_service_url.type "k8s-service" -}}
+      {{- if .Values.volume_gluster_service_url.namespace -}}
+        {{/* TODO */}}
+      {{- else -}}
+        {{ .Values.volume_gluster_service_url.service_name }}
+      {{- end -}}
+    {{- else if eq .Values.volume_gluster_service_url.type "http" -}}
+      {{/* TODO */}}
+    {{- end -}}
+  {{- else -}}
+        {{- $suffix := default "" .Values.suffix | toString -}}
+        {{- printf "%s-%s-%s" .Release.Name "volume-gluster" $suffix | trunc 63 | trimSuffix "-" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "volume-gluster_service_url" -}}
+  {{- if .Values.volume_gluster_service_url -}}
+    {{- if eq .Values.volume_gluster_service_url.type "auto-generate" -}}
+        {{ template "volume-gluster_name" . }}.{{template "service_namespace_domain" . }}
+    {{- else if eq .Values.volume_gluster_service_url.type "k8s-service" -}}
+      {{- if .Values.volume_gluster_service_url.namespace -}}
+        {{ .Values.volume_gluster_service_url.service_name }}.{{ .Values.volume_gluster_service_url.namespace }}.{{template "service_domain" . }}
+      {{- else -}}
+        {{ .Values.volume_gluster_service_url.service_name }}.{{template "service_namespace_domain" .}}
+      {{- end -}}
+    {{- else if eq .Values.volume_gluster_service_url.type "http" -}}
+      {{ .Values.volume_gluster_service_url.address }}
+    {{- else -}}
+      {{ template "volume-gluster_name" . }}.{{template "service_namespace_domain" . }}
+    {{- end -}}
+  {{- else -}}
+      {{ template "volume-gluster_name" . }}.{{template "service_namespace_domain" . }}
+  {{- end -}}
+{{- end -}}
+
 {{- define "oneprovider_name" -}}
   {{- if .Values.oneprovider_service_url -}}
     {{- if eq .Values.oneprovider_service_url.type "auto-generate" -}}

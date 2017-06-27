@@ -1,4 +1,4 @@
-# Default values for onedata.
+# Default values for onedata-1p.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -41,7 +41,7 @@ onezone:
   log_level: *log_level
 
 # What follows are the providers configurations for providers designated as:
-# krakow, paris, and lisbon
+# krakow
 oneprovider-krakow:
   suffix: &op1s krakow
   geoLatitude: 50.0647
@@ -79,79 +79,3 @@ oneprovider-krakow:
   volume-gluster:
     enabled: *gluster_enabled
     suffix: *op1s
-
-oneprovider-paris:
-  suffix: &op2s paris
-  geoLatitude: 48.8566
-  geoLongitude: 2.3522
-
-  image: *op_image
-  onepanel_batch_mode_enabled: *onepanel_batch_mode_enabled
-  log_level: *log_level
-  nameOverride: oneprovider
-
-  onezone_service_url:
-    type: auto-generate
-    disableSuffix: true
-
-  oneclient:
-    image: *oc_image
-    debug_mode: *oneclients_debug_mode_enabled
-    enabled: *oneclients_enabled
-    suffix: *op2s
-    onedata_cli:
-      image: *cli_image
-  onedata-cli:
-    image: *cli_image
-    enabled: *onedata_cli_enabled
-    suffix: *op2s
-  volume-s3:
-    enabled: *s3_enabled
-    suffix: *op2s
-  volume-ceph:
-    enabled: *ceph_enabled
-    suffix: *op2s
-  volume-nfs:
-    enabled: *nfs_enabled
-    suffix: *op2s
-  volume-gluster:
-    enabled: *gluster_enabled
-    suffix: *op2s
-
-oneprovider-lisbon:
-  suffix: &op3s lisbon
-  geoLatitude: 38.7223
-  geoLongitude: -9.1393
-
-  image: *op_image
-  onepanel_batch_mode_enabled: *onepanel_batch_mode_enabled
-  log_level: *log_level
-  nameOverride: oneprovider
-
-  onezone_service_url:
-    type: auto-generate
-    disableSuffix: true
-
-  oneclient:
-    image: *oc_image
-    debug_mode: *oneclients_debug_mode_enabled
-    enabled: *oneclients_enabled
-    suffix: *op3s
-    onedata_cli:
-      image: *cli_image
-  onedata-cli:
-    image: *cli_image
-    enabled: *onedata_cli_enabled
-    suffix: *op3s
-  volume-s3:
-    enabled: *s3_enabled
-    suffix: *op3s
-  volume-ceph:
-    enabled: *ceph_enabled
-    suffix: *op3s
-  volume-nfs:
-    enabled: *nfs_enabled
-    suffix: *op3s
-  volume-gluster:
-    enabled: *gluster_enabled
-    suffix: *op3s

@@ -16,7 +16,8 @@ spec:
     storage: {{ .Values.storage | quote }}
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Recycle
+  # The NFS server pod is deleted anyway so no need to recycle
+  persistentVolumeReclaimPolicy: Retain
   nfs:
     # TODO: The NFS server name is resolved using nodes resolve.conf
     # here we expect that nodes resovle.conf can resolve namespaces service name

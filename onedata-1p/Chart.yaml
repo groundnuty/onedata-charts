@@ -1,5 +1,5 @@
-name: onedata
-version: 0.2.0
+name: onedata-1p
+version: 0.2.1
 home: https://github.com/onedata/onedata
 maintainers:
   - name: Michal Orzechowski

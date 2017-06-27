@@ -74,3 +74,27 @@ spaces:
       - provider: "lisbon"
         storage_name: "nfs"
         size: '1000000000'
+  - name: "krk-3-par-c-lis-n"
+    supports:
+      - provider: "krakow"
+        storage_name: "s3"
+        size: '1000000000'
+      - provider: "paris"
+        storage_name: "ceph"
+        size: '1000000000'
+      - provider: "lisbon"
+        storage_name: "nfs"
+        size: '1000000000'  
+  - name: "krk-g"
+    supports:
+      - provider: "krakow"
+        storage_name: "gluster"
+        size: '1000000000' 
+  - name: "krk-g-par-3"
+    supports:
+      - provider: "krakow"
+        storage_name: "gluster"
+        size: '1000000000'
+      - provider: "paris"
+        storage_name: "ceph"
+        size: '1000000000'

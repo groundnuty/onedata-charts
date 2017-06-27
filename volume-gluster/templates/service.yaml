@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    version: "{{ .Chart.Version }}"
+spec:
+  type: {{ .Values.serviceType }}
+  ports:
+    - name: g-daemon-tcp
+      protocol: TCP
+      port: 24007
+    - name: g-daemon-udp
+      protocol: UDP
+      port: 24007
+    - name: g-mgmt-tcp
+      protocol: TCP
+      port: 24008
+    - name: g-mgmt-udp
+      protocol: UDP
+      port: 24008
+    - name: gluster-brick0
+      port: 49152
+    - name: gluster-brick1
+      port: 49153
+    - name: gluster-brick2
+      port: 49154
+    - name: gluster-brick3
+      port: 49155
+    - name: gluster-brick4
+      port: 49156
+    - name: gluster-brick5
+      port: 49157
+    - name: gluster-brick6
+      port: 49158
+    - name: gluster-brick7
+      port: 49159
+  selector:
+    app: {{ template "fullname" . }}

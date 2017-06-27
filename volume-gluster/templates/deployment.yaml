@@ -1,0 +1,103 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    version: "{{ .Chart.Version }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        chart: {{ .Chart.Name }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+      annotations:
+        version: "{{ .Chart.Version }}"
+    spec:
+      hostname: {{ .Chart.Name | quote }}
+      subdomain: {{ template "fullname" . }}
+{{ include "imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ default .Values.imagePullPolicy }} # .Values.global.imagePullPolicy | default "IfNotPresent" }}
+        volumeMounts:
+        - name: glusterfs-cgroup
+          mountPath: "/sys/fs/cgroup"
+          readOnly: true
+        securityContext:
+          capabilities: {}
+          privileged: true
+        ports:
+          - name: g-daemon-tpc
+            containerPort: 24007
+            protocol: TCP
+          - name: g-daemon-udp
+            protocol: UDP
+            containerPort: 24007
+          - name: g-mgmt-tcp
+            protocol: TCP
+            containerPort: 24008
+          - name: g-mgmt-udp
+            protocol: UDP
+            containerPort: 24008
+          - name: gluster-brick0
+            containerPort: 49152
+          - name: gluster-brick1
+            containerPort: 49153
+          - name: gluster-brick2
+            containerPort: 49154
+          - name: gluster-brick3
+            containerPort: 49155
+          - name: gluster-brick4
+            containerPort: 49156
+          - name: gluster-brick5
+            containerPort: 49157
+          - name: gluster-brick6
+            containerPort: 49158
+          - name: gluster-brick7
+            containerPort: 49159
+        readinessProbe:
+          timeoutSeconds: 3
+          initialDelaySeconds: 40
+          exec:
+            command:
+              - "/bin/bash"
+              - "-c"
+              - systemctl status glusterd.service
+          periodSeconds: 25
+          successThreshold: 1
+          failureThreshold: 15
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - >
+                  gluster peer status ;
+                  mkdir /mnt/{{ .Values.volumeName }} ;
+                  gluster volume create {{ .Values.volumeName }} $(hostname -i):/mnt/{{ .Values.volumeName }} force ;
+                  gluster volume start {{ .Values.volumeName }} ;
+        livenessProbe:
+          timeoutSeconds: 3
+          initialDelaySeconds: 40
+          exec:
+            command:
+              - "/bin/bash"
+              - "-c"
+              - systemctl status glusterd.service
+          periodSeconds: 25
+          successThreshold: 1
+          failureThreshold: 15
+      volumes:
+        - name: glusterfs-cgroup
+          hostPath:
+            path: "/sys/fs/cgroup"
+

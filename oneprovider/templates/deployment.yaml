@@ -46,6 +46,18 @@ spec:
               ]
           }
         {{- end -}}
+        {{- if and (index .Values "volume-gluster" "enabled") (or (index .Values "volume-s3" "enabled") (index .Values "volume-ceph" "enabled")) -}},{{- end -}}
+        {{- if (index .Values "volume-gluster" "enabled") }}
+          {
+              "name": "wait-for-volume-gluster",
+              "image": "{{ .Values.wait_for.image }}",
+              "imagePullPolicy": "{{ default .Values.wait_for.imagePullPolicy .Values.global.imagePullPolicy | default "IfNotPresent" }}",
+{{ include "imagePullSecrets_json" . | indent 14 }}
+              "args": [
+                  "pod", "-lapp={{ template "volume-gluster_name" . }}"
+              ]
+          }
+        {{- end -}}
         ]'
     spec:
       hostname: node1
@@ -139,7 +151,7 @@ spec:
                 {{- if (index .Values "volume-s3" "enabled") }}
                   s3:
                     type: s3
-                    hostname: "{{ template "volume-s3_name" . }}:8000"
+                    hostname: {{ template "volume-s3_name" . }}:8000
                     bucketName: {{ index .Values "volume-s3" "bucketName" }}
                     accessKey: {{ index .Values "volume-s3" "key_id" }}
                     secretKey: {{ index .Values "volume-s3" "access_key" }}
@@ -153,6 +165,13 @@ spec:
                     monitorHostname: {{ template "volume-ceph_name" . }}
                     clusterName: {{ index .Values "volume-ceph" "cluster_name" }}
                     poolName: {{ index .Values "volume-ceph" "pool_name" }}
+                {{- end }}
+                {{- if (index .Values "volume-gluster" "enabled") }}
+                  gluster:
+                    type: glusterfs
+                    hostname: {{ template "volume-gluster_name" . }}
+                    volume: {{ index .Values "volume-gluster" "volumeName" }}
+                    transport: tcp
                 {{- end }}
               oneprovider:
                 register: true

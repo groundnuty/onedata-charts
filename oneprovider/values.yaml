@@ -92,3 +92,8 @@ volume-nfs:
   container_mount_path: /volumes/nfs
   storage_claim: 1T
   mount_options: "soft,intr,timeo=10"
+
+# Create gluster storage server and connect with oneprovider with tested default values
+volume-gluster:
+  enabled: false
+  suffix: *providerSuffix

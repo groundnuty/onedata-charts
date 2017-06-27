@@ -1,9 +1,9 @@
-name: volume-ceph
-version: 0.2.3
-description: A single container CEPH setup, suitable for testing purposes.
+name: volume-gluster
+version: 0.2.0
+description: A single container gluster setup, suitable for testing purposes.
 keywords:
   - onedata
-  - volume-ceph
+  - volume-gluster
   - storage
 maintainers:
   - name: Michal Orzechowski

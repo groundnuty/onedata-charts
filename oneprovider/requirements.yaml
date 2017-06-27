@@ -1,29 +1,34 @@
 dependencies:
 - name: oneclient
-  version: 0.2.6
+  version: 0.2.7
   repository: https://groundnuty.github.io/onedata-charts/
   condition: oneclient.enabled
 
 - name: onedata-cli
-  version: 0.2.6
+  version: 0.2.7
   repository: https://groundnuty.github.io/onedata-charts/
   condition: onedata-cli.enabled
 
 - name: onedata-chart-utils
-  version: 0.2.7
+  version: 0.2.8
   repository: https://groundnuty.github.io/onedata-charts/
 
 - name: volume-s3
-  version: 0.2.2
+  version: 0.2.3
   repository: https://groundnuty.github.io/onedata-charts/
   condition: volume-s3.enabled
 
 - name: volume-ceph
-  version: 0.2.2
+  version: 0.2.3
   repository: https://groundnuty.github.io/onedata-charts/
   condition: volume-ceph.enabled
 
 - name: volume-nfs
-  version: 0.2.2
+  version: 0.2.4
   repository: https://groundnuty.github.io/onedata-charts/
   condition: volume-nfs.enabled
+
+- name: volume-gluster
+  version: 0.2.0
+  repository: https://groundnuty.github.io/onedata-charts/
+  condition: volume-gluster.enabled

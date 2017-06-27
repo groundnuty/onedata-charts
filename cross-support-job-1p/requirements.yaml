@@ -3,7 +3,7 @@ dependencies:
   version: 0.2.8
   repository: https://groundnuty.github.io/onedata-charts/
 
-- name: onedata-3p
+- name: onedata-1p
   version: 0.2.1
   repository: https://groundnuty.github.io/onedata-charts/
-  condition: onedata-3p.enabled
+  condition: onedata-1p.enabled
